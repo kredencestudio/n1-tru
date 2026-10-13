@@ -1,0 +1,304 @@
+{
+  "general": {
+    "siteTitle": "N1 True Media — Film Equipment Rental House",
+    "metaDescription": "Cinema cameras, lenses and production equipment for films, OTT, commercials and music videos in Mumbai and worldwide.",
+    "brandName": "N1 True Media",
+    "accentColor": "#54B669",
+    "adminPin": "admin123"
+  },
+  "nav": {
+    "ctaText": "Get a Quote →",
+    "ctaLink": "https://wa.me/919820669798",
+    "links": [
+      {
+        "label": "Equipment",
+        "url": "#equipment"
+      },
+      {
+        "label": "Why Us",
+        "url": "#why"
+      },
+      {
+        "label": "Productions",
+        "url": "#productions"
+      },
+      {
+        "label": "Clients",
+        "url": "#clients"
+      },
+      {
+        "label": "Process",
+        "url": "#process"
+      },
+      {
+        "label": "Visit",
+        "url": "#visit"
+      }
+    ]
+  },
+  "hero": {
+    "tag": "FILM EQUIPMENT RENTAL HOUSE",
+    "line1": "YOU BRING THE VISION.",
+    "line2": "WE BRING THE GEAR.",
+    "subtitle": "Cinema cameras, lenses and production equipment for films, OTT, commercials, music videos and more — Sony VENICE 2, ARRI ALEXA 35, ALEXA Mini LF, Cooke, Zeiss and more.",
+    "btn1Text": "Get a Quote →",
+    "btn1Link": "https://wa.me/919820669798",
+    "btn2Text": "View Equipment",
+    "btn2Link": "#equipment",
+    "scrollText": "SCROLL",
+    "tapeText": "CAMERAS · LENSES · PRODUCTION GEAR"
+  },
+  "equipment": {
+    "eyebrow": "Pro Equipment",
+    "title": "Everything you need <em>to shoot.</em>",
+    "note": "Gimbals · Tripods · Rigs · Monitors · Follow Focus · Wireless Systems · Grip · Power & More. <b>Lighting, audio and drones also available on request.</b>",
+    "ctaText": "Check Availability →",
+    "ctaLink": "https://wa.me/919820669798",
+    "items": [
+      {
+        "id": "1",
+        "tag": "Camera",
+        "name": "SONY VENICE 2",
+        "icon": "i-camera",
+        "spec": "8.6K Full Frame · 16 Stops DR",
+        "accent": "#54B669"
+      },
+      {
+        "id": "2",
+        "tag": "Lens",
+        "name": "COOKE S7/i",
+        "icon": "i-lens",
+        "spec": "Full Frame Plus · T2.0 Primes",
+        "accent": "#327270"
+      },
+      {
+        "id": "3",
+        "tag": "Camera",
+        "name": "ARRI ALEXA 35",
+        "icon": "i-camera",
+        "spec": "4.6K Super 35 · 17 Stops DR",
+        "accent": "#3C7D52"
+      },
+      {
+        "id": "4",
+        "tag": "Lens",
+        "name": "ZEISS SUPREME",
+        "icon": "i-lens",
+        "spec": "Full Frame · T1.5 High Speed",
+        "accent": "#54B669"
+      },
+      {
+        "id": "5",
+        "tag": "Camera",
+        "name": "ALEXA MINI LF",
+        "icon": "i-camera",
+        "spec": "4.5K Large Format · Dual ISO",
+        "accent": "#327270"
+      },
+      {
+        "id": "6",
+        "tag": "Lens",
+        "name": "SIGNATURE PRIME",
+        "icon": "i-lens",
+        "spec": "T1.8 Magnesium · Warm Flares",
+        "accent": "#3C7D52"
+      },
+      {
+        "id": "7",
+        "tag": "Camera",
+        "name": "RED V-RAPTOR",
+        "icon": "i-camera",
+        "spec": "8K VV 120fps · Compact Carbon",
+        "accent": "#54B669"
+      }
+    ]
+  },
+  "why": {
+    "eyebrow": "Why N1",
+    "title": "The gear is ready.<br>So are we.",
+    "tags": [
+      "MUMBAI · WORLDWIDE",
+      "CINEMA CAMERAS",
+      "CINEMA LENSES",
+      "PRODUCTION GEAR"
+    ],
+    "items": [
+      {
+        "id": "1",
+        "icon": "i-check",
+        "title": "Well-Maintained",
+        "text": "Every rental is handled and checked before it goes out."
+      },
+      {
+        "id": "2",
+        "icon": "i-clock",
+        "title": "On-Time",
+        "text": "Production schedules matter. We get your equipment where it needs to be, when it needs to be there."
+      },
+      {
+        "id": "3",
+        "icon": "i-flex",
+        "title": "Flexible",
+        "text": "Tell us what your production needs. We'll work around the requirement."
+      },
+      {
+        "id": "4",
+        "icon": "i-target",
+        "title": "Ready to Shoot",
+        "text": "Visit us, check the equipment and get your setup sorted before the shoot."
+      }
+    ]
+  },
+  "productions": {
+    "eyebrow": "PRODUCTIONS",
+    "title": "Made for production.<br>One setup, <em>many ways to shoot.</em>",
+    "items": [
+      {
+        "id": "corporate",
+        "title": "CORPORATE<br>FILMS",
+        "icon": "corporate"
+      },
+      {
+        "id": "commercials",
+        "title": "COMMERCIALS",
+        "icon": "commercials"
+      },
+      {
+        "id": "features",
+        "title": "FEATURE<br>FILMS",
+        "icon": "features"
+      },
+      {
+        "id": "events",
+        "title": "EVENTS &<br>WEDDINGS",
+        "icon": "events"
+      },
+      {
+        "id": "ott",
+        "title": "OTT & WEB<br>SERIES",
+        "icon": "ott"
+      },
+      {
+        "id": "aerial",
+        "title": "AERIAL &<br>SPECIALTY",
+        "icon": "aerial"
+      },
+      {
+        "id": "digital",
+        "title": "DIGITAL<br>CONTENT",
+        "icon": "digital"
+      },
+      {
+        "id": "music",
+        "title": "MUSIC<br>VIDEOS",
+        "icon": "music"
+      }
+    ],
+    "subIntro": "Explore equipment packages calibrated for every format."
+  },
+  "clients": {
+    "eyebrow": "Our Clients",
+    "title": "Trusted on<br><em>professional</em><br>productions.",
+    "subText": "EQUIPMENT SUPPLIED FOR PRODUCTIONS ACROSS FILM, OTT & DIGITAL MEDIA — MUMBAI BASED, SERVING PRODUCTIONS WORLDWIDE",
+    "planets": [
+      {
+        "id": "prime",
+        "name": "Prime Video",
+        "logo": "/logos/primevideo.png",
+        "orbit": "inner",
+        "className": "p-prime",
+        "orbClass": "orb-prime",
+        "pillClass": "pill-prime"
+      },
+      {
+        "id": "sonyliv",
+        "name": "Sony LIV",
+        "logo": "/logos/sonyliv.png",
+        "orbit": "inner",
+        "className": "p-sonyliv",
+        "orbClass": "orb-sonyliv",
+        "pillClass": "pill-sonyliv"
+      },
+      {
+        "id": "hotstar",
+        "name": "Disney+ Hotstar",
+        "logo": "/logos/hotstar.png",
+        "orbit": "outer",
+        "className": "p-hotstar",
+        "orbClass": "orb-hotstar",
+        "pillClass": "pill-hotstar"
+      },
+      {
+        "id": "zee5",
+        "name": "Zee5",
+        "logo": "/logos/zee5.png",
+        "orbit": "outer",
+        "className": "p-zee5",
+        "orbClass": "orb-zee5",
+        "pillClass": "pill-zee5"
+      },
+      {
+        "id": "altbalaji",
+        "name": "ALTBalaji",
+        "logo": "/logos/altbalaji.png",
+        "orbit": "outer",
+        "className": "p-altbalaji",
+        "orbClass": "orb-altbalaji",
+        "pillClass": "pill-altbalaji"
+      }
+    ]
+  },
+  "process": {
+    "eyebrow": "Process",
+    "title": "From enquiry <em>to set.</em>",
+    "steps": [
+      {
+        "num": "01",
+        "title": "Tell Us",
+        "desc": "Share your shoot date, location and equipment requirements."
+      },
+      {
+        "num": "02",
+        "title": "Get Your Quote",
+        "desc": "We'll check availability and send you the rental quote."
+      },
+      {
+        "num": "03",
+        "title": "View the Gear",
+        "desc": "Come to our office, see the equipment and discuss your setup."
+      },
+      {
+        "num": "04",
+        "title": "Get Set",
+        "desc": "Collect your equipment or arrange delivery and get ready to shoot."
+      }
+    ]
+  },
+  "visit": {
+    "eyebrow": "Visit Us",
+    "title": "Come see<br>the gear.",
+    "subtitle": "Based in Mumbai — equipping productions across India and worldwide.",
+    "addressLines": "3/25, Unnat Nagar No. 4, C.C.I. Colony,\nNear Jain Hospital, M.G. Road,\nGoregaon (W), Mumbai – 400104",
+    "mapsUrl": "https://share.google/kKq9NAiRLvvJNbhTm",
+    "phone": "+91 98206 69798",
+    "email": "hello.n1truemedia@gmail.com",
+    "mapEmbedUrl": "https://maps.google.com/maps?q=3%2F25%2C%20Unnat%20Nagar%20No.%204%2C%20C.C.I.%20Colony%2C%20Near%20Jain%20Hospital%2C%20M.G.%20Road%2C%20Goregaon%20West%2C%20Mumbai%20400104&t=&z=16&ie=UTF8&iwloc=&output=embed",
+    "mapBadge": "N1 True Media · Goregaon (W), Mumbai"
+  },
+  "finalCta": {
+    "eyebrow": "Ready to Roll?",
+    "title": "Tell us what you're shooting.<br>We'll arrange the gear.",
+    "subtitle": "Cameras · Lenses · Production Equipment",
+    "btn1Text": "Get Your Quote →",
+    "btn1Link": "https://wa.me/919820669798",
+    "btn2Text": "Call +91 98206 69798",
+    "btn2Link": "tel:+919820669798"
+  },
+  "footer": {
+    "copyright": "© 2026 N1 TRUE MEDIA. ALL RIGHTS RESERVED.",
+    "location": "MUMBAI, INDIA",
+    "instagram": "#",
+    "whatsapp": "https://wa.me/919820669798",
+    "maps": "https://share.google/kKq9NAiRLvvJNbhTm"
+  }
+}

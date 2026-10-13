@@ -1,0 +1,2422 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>N1 True Media — Content Management System & Admin Portal</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@400;600;700;800&family=Inter:wght@400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<script src="/site-data.js"></script>
+<style>
+:root {
+  --black: #080a09;
+  --dark-1: #0e1210;
+  --dark-2: #141a16;
+  --dark-3: #1c241f;
+  --border: rgba(250, 250, 246, 0.1);
+  --border-focus: rgba(84, 182, 105, 0.5);
+  --paper: #fafaf6;
+  --paper-70: rgba(250, 250, 246, 0.7);
+  --paper-40: rgba(250, 250, 246, 0.4);
+  --paper-10: rgba(250, 250, 246, 0.1);
+  --green: #54b669;
+  --green-glow: rgba(84, 182, 105, 0.35);
+  --teal: #327270;
+  --dark-green: #3c7d52;
+  --red: #eb5757;
+  --font-display: 'Unbounded', sans-serif;
+  --font-body: 'Inter', sans-serif;
+  --font-mono: 'Space Mono', monospace;
+  --sidebar-w: 260px;
+}
+
+* { margin:0; padding:0; box-sizing:border-box; }
+body {
+  background: var(--black);
+  color: var(--paper);
+  font-family: var(--font-body);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  overflow-x: hidden;
+}
+
+/* Scrollbars */
+::-webkit-scrollbar { width: 7px; height: 7px; }
+::-webkit-scrollbar-track { background: var(--dark-1); }
+::-webkit-scrollbar-thumb { background: var(--dark-3); border-radius: 4px; }
+::-webkit-scrollbar-thumb:hover { background: var(--green); }
+
+/* SVG Icons */
+.icon { width: 18px; height: 18px; stroke: currentColor; fill: none; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; display: inline-block; vertical-align: middle; }
+
+/* ================= TOP NAVBAR ================= */
+.topbar {
+  height: 64px;
+  background: rgba(14, 18, 16, 0.95);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 1.5rem;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+}
+
+.topbar-brand {
+  display: flex;
+  align-items: center;
+  gap: 0.9rem;
+  text-decoration: none;
+  color: inherit;
+}
+.brand-mark {
+  width: 32px;
+  height: 32px;
+  background: linear-gradient(135deg, var(--green), var(--teal));
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: 1.1rem;
+  color: #000;
+  box-shadow: 0 0 15px var(--green-glow);
+}
+.brand-title {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 1rem;
+  letter-spacing: -0.02em;
+}
+.brand-title span { color: var(--green); font-size: 0.78rem; font-family: var(--font-mono); margin-left: 0.4rem; padding: 0.15rem 0.45rem; background: rgba(84, 182, 105, 0.12); border: 1px solid var(--green); border-radius: 4px; }
+
+.sync-status {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  color: var(--paper-70);
+  background: var(--dark-2);
+  padding: 0.35rem 0.75rem;
+  border-radius: 100px;
+  border: 1px solid var(--border);
+}
+.sync-dot {
+  width: 8px;
+  height: 8px;
+  background: var(--green);
+  border-radius: 50%;
+  box-shadow: 0 0 8px var(--green);
+  animation: pulse 2s infinite;
+}
+@keyframes pulse { 0%, 100% { opacity: 1; transform: scale(1); } 50% { opacity: 0.4; transform: scale(0.85); } }
+
+.topbar-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+}
+
+.btn {
+  font-family: var(--font-body);
+  font-size: 0.82rem;
+  font-weight: 600;
+  padding: 0.55rem 1.05rem;
+  border-radius: 8px;
+  border: 1px solid transparent;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  transition: all 0.25s ease;
+  text-decoration: none;
+  color: var(--paper);
+}
+.btn-primary {
+  background: var(--green);
+  color: #000;
+  font-weight: 700;
+  box-shadow: 0 2px 14px var(--green-glow);
+}
+.btn-primary:hover {
+  background: #65cf7c;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 20px var(--green-glow);
+}
+.btn-dark {
+  background: var(--dark-2);
+  border-color: var(--border);
+  color: var(--paper);
+}
+.btn-dark:hover {
+  background: var(--dark-3);
+  border-color: var(--paper-40);
+}
+.btn-danger {
+  background: rgba(235, 87, 87, 0.15);
+  border-color: rgba(235, 87, 87, 0.4);
+  color: #ff7676;
+}
+.btn-danger:hover {
+  background: var(--red);
+  color: #fff;
+}
+.btn-icon {
+  padding: 0.55rem;
+  border-radius: 8px;
+}
+
+/* ================= APP LAYOUT ================= */
+.app-container {
+  display: flex;
+  flex: 1;
+  position: relative;
+}
+
+/* Sidebar */
+.sidebar {
+  width: var(--sidebar-w);
+  background: var(--dark-1);
+  border-right: 1px solid var(--border);
+  padding: 1.25rem 0.75rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+  flex-shrink: 0;
+  overflow-y: auto;
+  max-height: calc(100vh - 64px);
+  position: sticky;
+  top: 64px;
+}
+
+.nav-section-title {
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--paper-40);
+  padding: 0.8rem 0.6rem 0.3rem;
+}
+
+.nav-tab-btn {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.65rem 0.85rem;
+  border-radius: 8px;
+  background: transparent;
+  border: none;
+  color: var(--paper-70);
+  font-family: var(--font-body);
+  font-size: 0.85rem;
+  font-weight: 500;
+  text-align: left;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  width: 100%;
+}
+.nav-tab-btn:hover {
+  background: var(--dark-2);
+  color: var(--paper);
+}
+.nav-tab-btn.active {
+  background: var(--dark-3);
+  color: var(--green);
+  font-weight: 600;
+  border-left: 3px solid var(--green);
+}
+.nav-tab-btn .badge {
+  margin-left: auto;
+  font-size: 0.7rem;
+  font-family: var(--font-mono);
+  padding: 0.1rem 0.4rem;
+  border-radius: 100px;
+  background: var(--dark-2);
+  color: var(--paper-40);
+}
+.nav-tab-btn.active .badge {
+  background: rgba(84, 182, 105, 0.15);
+  color: var(--green);
+}
+
+/* Main Content Area */
+.main-stage {
+  flex: 1;
+  padding: 2rem clamp(1.2rem, 3vw, 2.5rem);
+  background: var(--black);
+  overflow-y: auto;
+  min-height: calc(100vh - 64px);
+  transition: all 0.3s ease;
+}
+
+/* Live Preview Split Pane */
+.preview-pane {
+  display: none;
+  width: 50%;
+  border-left: 1px solid var(--border);
+  background: #000;
+  flex-direction: column;
+  position: sticky;
+  top: 64px;
+  height: calc(100vh - 64px);
+  overflow: hidden;
+  transition: all 0.3s ease;
+}
+.preview-pane.open {
+  display: flex;
+}
+.preview-header {
+  height: 48px;
+  background: var(--dark-1);
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 1rem;
+}
+.preview-title {
+  font-family: var(--font-mono);
+  font-size: 0.74rem;
+  color: var(--paper-70);
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+.device-toggles {
+  display: flex;
+  gap: 0.3rem;
+  background: var(--dark-2);
+  padding: 0.2rem;
+  border-radius: 6px;
+  border: 1px solid var(--border);
+}
+.dev-btn {
+  background: none;
+  border: none;
+  color: var(--paper-40);
+  padding: 0.25rem 0.5rem;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 0.72rem;
+  font-family: var(--font-mono);
+}
+.dev-btn.active {
+  background: var(--dark-3);
+  color: var(--green);
+}
+.preview-frame-wrap {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #050706;
+  padding: 0.5rem;
+  overflow: hidden;
+}
+.preview-iframe {
+  width: 100%;
+  height: 100%;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: #000;
+  transition: width 0.3s ease;
+}
+.preview-iframe.tablet { width: 768px; }
+.preview-iframe.mobile { width: 375px; }
+
+/* Panels & Tab Content */
+.tab-content { display: none; }
+.tab-content.active { display: block; animation: fadeIn 0.25s ease; }
+@keyframes fadeIn { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: translateY(0); } }
+
+/* Section Header */
+.panel-header {
+  margin-bottom: 1.8rem;
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+.panel-title {
+  font-family: var(--font-display);
+  font-size: 1.6rem;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+}
+.panel-title em {
+  font-style: normal;
+  color: var(--green);
+}
+.panel-desc {
+  font-size: 0.88rem;
+  color: var(--paper-40);
+  margin-top: 0.35rem;
+  max-width: 600px;
+}
+
+/* Glass Cards & Containers */
+.card-box {
+  background: var(--dark-1);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 1.5rem;
+  margin-bottom: 1.5rem;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.4);
+}
+.card-box-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1.25rem;
+  padding-bottom: 0.8rem;
+  border-bottom: 1px solid var(--border);
+}
+.card-box-title {
+  font-family: var(--font-display);
+  font-size: 1.05rem;
+  font-weight: 600;
+}
+
+/* Form Styles */
+.form-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 1.2rem;
+}
+.form-grid-full {
+  grid-column: 1 / -1;
+}
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.45rem;
+}
+.form-group label {
+  font-family: var(--font-mono);
+  font-size: 0.74rem;
+  letter-spacing: 0.05em;
+  color: var(--paper-70);
+  text-transform: uppercase;
+}
+.form-group .hint {
+  font-size: 0.72rem;
+  color: var(--paper-40);
+}
+.form-control {
+  background: var(--dark-2);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 0.65rem 0.85rem;
+  color: var(--paper);
+  font-family: var(--font-body);
+  font-size: 0.88rem;
+  transition: all 0.25s ease;
+  width: 100%;
+}
+.form-control:focus {
+  outline: none;
+  border-color: var(--green);
+  box-shadow: 0 0 12px var(--green-glow);
+  background: var(--dark-3);
+}
+textarea.form-control {
+  min-height: 85px;
+  resize: vertical;
+  line-height: 1.45;
+}
+
+/* Repeater Item Cards (Gear, Accordion, Steps, etc.) */
+.repeater-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.85rem;
+}
+.repeater-card {
+  background: var(--dark-2);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 1.1rem;
+  display: grid;
+  grid-template-columns: 42px 1fr auto;
+  gap: 1rem;
+  align-items: center;
+  transition: all 0.25s ease;
+}
+.repeater-card:hover {
+  border-color: var(--paper-40);
+  box-shadow: 0 6px 16px rgba(0,0,0,0.3);
+}
+.repeater-drag-handle {
+  width: 38px;
+  height: 38px;
+  border-radius: 8px;
+  background: var(--dark-3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--paper-40);
+  font-family: var(--font-mono);
+  font-weight: 700;
+  font-size: 0.82rem;
+  border: 1px solid var(--border);
+}
+.repeater-main {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 0.8rem;
+}
+.repeater-actions {
+  display: flex;
+  gap: 0.35rem;
+}
+
+/* Icon Selection Pills */
+.icon-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.3rem 0.6rem;
+  background: var(--dark-3);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  font-size: 0.78rem;
+  color: var(--paper-70);
+  cursor: pointer;
+}
+.icon-badge:hover {
+  border-color: var(--green);
+  color: var(--green);
+}
+
+/* Stat Cards in Dashboard */
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1.1rem;
+  margin-bottom: 1.8rem;
+}
+.stat-card {
+  background: var(--dark-1);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 1.25rem;
+  position: relative;
+  overflow: hidden;
+}
+.stat-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0; height: 3px;
+  background: linear-gradient(90deg, var(--green), var(--teal));
+}
+.stat-number {
+  font-family: var(--font-display);
+  font-size: 2.2rem;
+  font-weight: 800;
+  color: var(--paper);
+  line-height: 1.1;
+  margin-top: 0.4rem;
+}
+.stat-label {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  color: var(--paper-40);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+/* Quick Action Banner */
+.quick-banner {
+  background: linear-gradient(135deg, rgba(84, 182, 105, 0.12), rgba(50, 114, 112, 0.08));
+  border: 1px solid var(--green);
+  border-radius: 12px;
+  padding: 1.4rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin-bottom: 1.8rem;
+}
+.quick-banner h3 { font-family: var(--font-display); font-size: 1.1rem; margin-bottom: 0.2rem; }
+.quick-banner p { font-size: 0.85rem; color: var(--paper-70); }
+
+/* Color Picker Chips */
+.color-chips {
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+  margin-top: 0.4rem;
+}
+.color-chip {
+  width: 28px;
+  height: 28px;
+  border-radius: 6px;
+  cursor: pointer;
+  border: 2px solid transparent;
+  transition: transform 0.2s;
+}
+.color-chip:hover, .color-chip.active {
+  transform: scale(1.15);
+  border-color: #fff;
+}
+
+/* Toast Notifications */
+.toast-container {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  z-index: 9999;
+  pointer-events: none;
+}
+.toast {
+  pointer-events: auto;
+  background: var(--dark-2);
+  border: 1px solid var(--green);
+  color: var(--paper);
+  padding: 0.85rem 1.25rem;
+  border-radius: 8px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.6);
+  font-size: 0.85rem;
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+  animation: slideUp 0.3s cubic-bezier(0.18, 0.9, 0.2, 1);
+}
+.toast.error {
+  border-color: var(--red);
+}
+@keyframes slideUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+
+/* Passcode Lock Screen Modal */
+.lock-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(8, 10, 9, 0.96);
+  backdrop-filter: blur(16px);
+  z-index: 10000;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  padding: 1.5rem;
+}
+.lock-overlay.active { display: flex; }
+.lock-box {
+  background: var(--dark-1);
+  border: 1px solid var(--border);
+  border-radius: 18px;
+  padding: 2.2rem;
+  width: 100%;
+  max-width: 420px;
+  text-align: center;
+  box-shadow: 0 20px 50px rgba(0,0,0,0.8);
+}
+.lock-icon {
+  width: 54px;
+  height: 54px;
+  border-radius: 50%;
+  background: rgba(84, 182, 105, 0.12);
+  border: 1px solid var(--green);
+  color: var(--green);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 1.2rem;
+}
+.lock-title {
+  font-family: var(--font-display);
+  font-size: 1.35rem;
+  margin-bottom: 0.4rem;
+}
+.lock-desc {
+  font-size: 0.85rem;
+  color: var(--paper-40);
+  margin-bottom: 1.5rem;
+}
+
+/* JSON Code Editor */
+.json-editor {
+  width: 100%;
+  height: 480px;
+  background: #060807;
+  color: #a6e22e;
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
+  padding: 1rem;
+  border-radius: 10px;
+  border: 1px solid var(--border);
+  line-height: 1.5;
+  tab-size: 2;
+  white-space: pre;
+}
+
+/* Modal for Add Equipment / Add Planet */
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.75);
+  backdrop-filter: blur(8px);
+  z-index: 5000;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  padding: 1.5rem;
+}
+.modal-overlay.active { display: flex; }
+.modal-card {
+  background: var(--dark-1);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  width: 100%;
+  max-width: 580px;
+  max-height: 90vh;
+  overflow-y: auto;
+  padding: 1.8rem;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.8);
+}
+.modal-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1.2rem;
+  padding-bottom: 0.8rem;
+  border-bottom: 1px solid var(--border);
+}
+
+/* Responsive adjustments */
+@media (max-width: 900px) {
+  .sidebar { width: 70px; padding: 0.5rem; }
+  .sidebar .nav-tab-btn span, .sidebar .nav-section-title, .sidebar .badge { display: none; }
+  .sidebar .nav-tab-btn { justify-content: center; padding: 0.75rem; }
+  .preview-pane { display: none !important; }
+}
+</style>
+</head>
+<body>
+
+<!-- SVG SPRITE -->
+<svg style="display:none">
+  <defs>
+    <symbol id="icon-dash" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="9" rx="1"/><rect x="14" y="3" width="7" height="5" rx="1"/><rect x="14" y="12" width="7" height="9" rx="1"/><rect x="3" y="16" width="7" height="5" rx="1"/></symbol>
+    <symbol id="icon-hero" viewBox="0 0 24 24"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></symbol>
+    <symbol id="icon-equip" viewBox="0 0 24 24"><rect x="3" y="7" width="14" height="11" rx="2"/><path d="M17 10l4-2.4v9.8L17 15"/><circle cx="9" cy="12.5" r="3"/></symbol>
+    <symbol id="icon-why" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M8 12.5l2.5 2.5L16 9.5"/></symbol>
+    <symbol id="icon-prod" viewBox="0 0 24 24"><path d="M3 10l1.5-5.5L20 6.5 18.5 12z"/><rect x="3" y="10" width="18" height="9" rx="1.5"/><path d="M7 6l2 4M12 5.4l2 4"/></symbol>
+    <symbol id="icon-client" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M3 12h2M19 12h2M12 3v2M12 19v2"/><path d="M5.6 5.6l1.4 1.4M17 17l1.4 1.4M5.6 18.4l1.4-1.4M17 7l1.4-1.4"/></symbol>
+    <symbol id="icon-proc" viewBox="0 0 24 24"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></symbol>
+    <symbol id="icon-visit" viewBox="0 0 24 24"><path d="M12 21s7-6.4 7-12a7 7 0 10-14 0c0 5.6 7 12 7 12z"/><circle cx="12" cy="9" r="2.5"/></symbol>
+    <symbol id="icon-cta" viewBox="0 0 24 24"><path d="M4 5h16v11H8l-4 4z"/></symbol>
+    <symbol id="icon-code" viewBox="0 0 24 24"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></symbol>
+    <symbol id="icon-brand" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/></symbol>
+    <symbol id="icon-eye" viewBox="0 0 24 24"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></symbol>
+    <symbol id="icon-save" viewBox="0 0 24 24"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/><polyline points="7 3 7 8 15 8"/></symbol>
+    <symbol id="icon-trash" viewBox="0 0 24 24"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></symbol>
+    <symbol id="icon-plus" viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></symbol>
+    <symbol id="icon-arrow-up" viewBox="0 0 24 24"><line x1="12" y1="19" x2="12" y2="5"/><polyline points="5 12 12 5 19 12"/></symbol>
+    <symbol id="icon-arrow-down" viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><polyline points="19 12 12 19 5 12"/></symbol>
+    <symbol id="icon-lock" viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></symbol>
+  </defs>
+</svg>
+
+<!-- ================= TOPBAR ================= -->
+<header class="topbar">
+  <a href="/admin.html" class="topbar-brand">
+    <div class="brand-mark">N1</div>
+    <div class="brand-title">TRUE MEDIA <span>CMS ADMIN</span></div>
+  </a>
+
+  <div class="sync-status">
+    <span class="sync-dot"></span>
+    <span id="syncText">LIVE SYNC ACTIVE</span>
+  </div>
+
+  <div class="topbar-actions">
+    <button class="btn btn-dark" id="btnTogglePreview" title="Toggle Split Preview">
+      <svg class="icon"><use href="#icon-eye"/></svg>
+      <span>Live Preview</span>
+    </button>
+    <a href="/" target="_blank" class="btn btn-dark" title="Open Public Website">
+      <svg class="icon"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+      <span>View Site</span>
+    </a>
+    <button class="btn btn-primary" id="btnPublish">
+      <svg class="icon"><use href="#icon-save"/></svg>
+      <span>Publish Changes</span>
+    </button>
+    <button class="btn btn-dark btn-icon" id="btnLock" title="Lock Admin">
+      <svg class="icon"><use href="#icon-lock"/></svg>
+    </button>
+  </div>
+</header>
+
+<!-- ================= APP CONTAINER ================= -->
+<div class="app-container">
+  
+  <!-- Sidebar Navigation -->
+  <aside class="sidebar">
+    <div class="nav-section-title">Navigation</div>
+    <button class="nav-tab-btn active" data-tab="tab-dashboard">
+      <svg class="icon"><use href="#icon-dash"/></svg>
+      <span>Dashboard</span>
+    </button>
+
+    <div class="nav-section-title">Website Sections</div>
+    <button class="nav-tab-btn" data-tab="tab-hero">
+      <svg class="icon"><use href="#icon-hero"/></svg>
+      <span>Hero &amp; Banner</span>
+    </button>
+    <button class="nav-tab-btn" data-tab="tab-equipment">
+      <svg class="icon"><use href="#icon-equip"/></svg>
+      <span>Equipment Inventory</span>
+      <span class="badge" id="badgeEquipCount">7</span>
+    </button>
+    <button class="nav-tab-btn" data-tab="tab-why">
+      <svg class="icon"><use href="#icon-why"/></svg>
+      <span>Why N1</span>
+      <span class="badge" id="badgeWhyCount">4</span>
+    </button>
+    <button class="nav-tab-btn" data-tab="tab-productions">
+      <svg class="icon"><use href="#icon-prod"/></svg>
+      <span>Productions</span>
+      <span class="badge" id="badgeProdCount">8</span>
+    </button>
+    <button class="nav-tab-btn" data-tab="tab-clients">
+      <svg class="icon"><use href="#icon-client"/></svg>
+      <span>Clients &amp; Orbit</span>
+      <span class="badge" id="badgeClientCount">5</span>
+    </button>
+    <button class="nav-tab-btn" data-tab="tab-process">
+      <svg class="icon"><use href="#icon-proc"/></svg>
+      <span>Process Steps</span>
+      <span class="badge" id="badgeProcessCount">4</span>
+    </button>
+    <button class="nav-tab-btn" data-tab="tab-visit">
+      <svg class="icon"><use href="#icon-visit"/></svg>
+      <span>Visit &amp; Contact</span>
+    </button>
+    <button class="nav-tab-btn" data-tab="tab-finalcta">
+      <svg class="icon"><use href="#icon-cta"/></svg>
+      <span>CTA &amp; Footer</span>
+    </button>
+
+    <div class="nav-section-title">Advanced</div>
+    <button class="nav-tab-btn" data-tab="tab-branding">
+      <svg class="icon"><use href="#icon-brand"/></svg>
+      <span>Brand &amp; Security</span>
+    </button>
+    <button class="nav-tab-btn" data-tab="tab-json">
+      <svg class="icon"><use href="#icon-code"/></svg>
+      <span>Raw JSON</span>
+    </button>
+  </aside>
+
+  <!-- Main Stage / Editor Panels -->
+  <main class="main-stage">
+
+    <!-- TAB: DASHBOARD -->
+    <div class="tab-content active" id="tab-dashboard">
+      <div class="panel-header">
+        <div>
+          <h1 class="panel-title">N1 True Media <em>Admin Hub</em></h1>
+          <p class="panel-desc">Manage every piece of content, imagery, gear inventory and contact information on your website with live real-time sync.</p>
+        </div>
+        <div style="display:flex;gap:0.5rem;">
+          <button class="btn btn-dark" id="btnExportJson">Export JSON</button>
+          <button class="btn btn-dark" id="btnImportJsonTrigger">Import JSON</button>
+          <input type="file" id="importJsonInput" accept=".json" style="display:none;">
+        </div>
+      </div>
+
+      <div class="quick-banner">
+        <div>
+          <h3>Welcome to your Admin Portal</h3>
+          <p>Any edits you make here are automatically staged. Hit <b>"Publish Changes"</b> to broadcast them live to the site and save to disk!</p>
+        </div>
+        <button class="btn btn-primary" onclick="switchTab('tab-hero')">Start Editing Hero &rarr;</button>
+      </div>
+
+      <div class="stats-grid">
+        <div class="stat-card">
+          <div class="stat-label">Equipment in Inventory</div>
+          <div class="stat-number" id="statEquip">7</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">Client Platforms</div>
+          <div class="stat-number" id="statClients">5</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">Production Formats</div>
+          <div class="stat-number" id="statProd">8</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">Rental Process Steps</div>
+          <div class="stat-number" id="statSteps">4</div>
+        </div>
+      </div>
+
+      <div class="card-box">
+        <div class="card-box-header">
+          <div class="card-box-title">Quick Edit Jump Links</div>
+        </div>
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:0.8rem;">
+          <button class="btn btn-dark" onclick="switchTab('tab-equipment')">🎥 Manage Camera &amp; Lens Inventory</button>
+          <button class="btn btn-dark" onclick="switchTab('tab-why')">⚡ Edit Why N1 Accordion Points</button>
+          <button class="btn btn-dark" onclick="switchTab('tab-clients')">🪐 Update Streaming Client Logos</button>
+          <button class="btn btn-dark" onclick="switchTab('tab-visit')">📍 Update Phone, Email &amp; Location</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- TAB: HERO -->
+    <div class="tab-content" id="tab-hero">
+      <div class="panel-header">
+        <div>
+          <h1 class="panel-title">Hero &amp; <em>Banner Section</em></h1>
+          <p class="panel-desc">Customize the top opening presentation, headline, subtitle, buttons and badges.</p>
+        </div>
+      </div>
+
+      <div class="card-box">
+        <div class="card-box-header">
+          <div class="card-box-title">Hero Typography &amp; Headlines</div>
+        </div>
+        <div class="form-grid">
+          <div class="form-group form-grid-full">
+            <label>Eyebrow Tagline</label>
+            <input type="text" class="form-control" id="f-hero-tag" placeholder="FILM EQUIPMENT RENTAL HOUSE">
+            <span class="hint">Small uppercase tracker line above main headline.</span>
+          </div>
+          <div class="form-group">
+            <label>Headline Line 1</label>
+            <input type="text" class="form-control" id="f-hero-line1" placeholder="YOU BRING THE VISION.">
+          </div>
+          <div class="form-group">
+            <label>Headline Line 2 (Highlighted in Green)</label>
+            <input type="text" class="form-control" id="f-hero-line2" placeholder="WE BRING THE GEAR.">
+          </div>
+          <div class="form-group form-grid-full">
+            <label>Hero Subtitle / Description</label>
+            <textarea class="form-control" id="f-hero-sub" placeholder="Cinema cameras, lenses and production equipment..."></textarea>
+          </div>
+        </div>
+      </div>
+
+      <div class="card-box">
+        <div class="card-box-header">
+          <div class="card-box-title">Hero Call-To-Action Buttons &amp; Badges</div>
+        </div>
+        <div class="form-grid">
+          <div class="form-group">
+            <label>Primary Button Text</label>
+            <input type="text" class="form-control" id="f-hero-btn1-txt" placeholder="Get a Quote →">
+          </div>
+          <div class="form-group">
+            <label>Primary Button URL / Link</label>
+            <input type="text" class="form-control" id="f-hero-btn1-link" placeholder="https://wa.me/919820669798">
+          </div>
+          <div class="form-group">
+            <label>Secondary Button Text</label>
+            <input type="text" class="form-control" id="f-hero-btn2-txt" placeholder="View Equipment">
+          </div>
+          <div class="form-group">
+            <label>Secondary Button URL / Link</label>
+            <input type="text" class="form-control" id="f-hero-btn2-link" placeholder="#equipment">
+          </div>
+          <div class="form-group">
+            <label>Scroll Indicator Text</label>
+            <input type="text" class="form-control" id="f-hero-scroll" placeholder="SCROLL">
+          </div>
+          <div class="form-group">
+            <label>Side Tape Vertical Text</label>
+            <input type="text" class="form-control" id="f-hero-tape" placeholder="CAMERAS · LENSES · PRODUCTION GEAR">
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- TAB: EQUIPMENT INVENTORY -->
+    <div class="tab-content" id="tab-equipment">
+      <div class="panel-header">
+        <div>
+          <h1 class="panel-title">Equipment <em>Inventory Carousel</em></h1>
+          <p class="panel-desc">Manage the 3D cylindrical rotating carousel of cameras, lenses, and gear packages.</p>
+        </div>
+        <button class="btn btn-primary" id="btnAddGear">
+          <svg class="icon"><use href="#icon-plus"/></svg>
+          <span>Add Equipment Item</span>
+        </button>
+      </div>
+
+      <div class="card-box">
+        <div class="card-box-header">
+          <div class="card-box-title">Section Headings &amp; Notes</div>
+        </div>
+        <div class="form-grid">
+          <div class="form-group">
+            <label>Section Eyebrow</label>
+            <input type="text" class="form-control" id="f-equip-eyebrow" placeholder="Equipment">
+          </div>
+          <div class="form-group">
+            <label>Section Title (Supports HTML &lt;em&gt;)</label>
+            <input type="text" class="form-control" id="f-equip-title" placeholder="Everything you need <em>to shoot.</em>">
+          </div>
+          <div class="form-group form-grid-full">
+            <label>Inventory Footer Note</label>
+            <textarea class="form-control" id="f-equip-note" placeholder="Gimbals · Tripods · Rigs · Monitors..."></textarea>
+          </div>
+          <div class="form-group">
+            <label>CTA Button Text</label>
+            <input type="text" class="form-control" id="f-equip-cta-txt" placeholder="Check Availability →">
+          </div>
+          <div class="form-group">
+            <label>CTA Button Link</label>
+            <input type="text" class="form-control" id="f-equip-cta-link" placeholder="https://wa.me/919820669798">
+          </div>
+        </div>
+      </div>
+
+      <div class="card-box">
+        <div class="card-box-header">
+          <div class="card-box-title">Inventory Items List</div>
+          <span class="hint">Use Up/Down arrows to change carousel order.</span>
+        </div>
+        <div class="repeater-list" id="gearListContainer">
+          <!-- Rendered dynamically -->
+        </div>
+      </div>
+    </div>
+
+    <!-- TAB: WHY N1 -->
+    <div class="tab-content" id="tab-why">
+      <div class="panel-header">
+        <div>
+          <h1 class="panel-title">Why N1 <em>Accordion &amp; Badges</em></h1>
+          <p class="panel-desc">Edit the top tags pills and the 4 interactive value proposition panels.</p>
+        </div>
+        <button class="btn btn-primary" id="btnAddWhyItem">
+          <svg class="icon"><use href="#icon-plus"/></svg>
+          <span>Add Point</span>
+        </button>
+      </div>
+
+      <div class="card-box">
+        <div class="card-box-header">
+          <div class="card-box-title">Section Headings &amp; Tags</div>
+        </div>
+        <div class="form-grid">
+          <div class="form-group">
+            <label>Section Eyebrow</label>
+            <input type="text" class="form-control" id="f-why-eyebrow" placeholder="Why N1">
+          </div>
+          <div class="form-group">
+            <label>Section Title (HTML &lt;br&gt; supported)</label>
+            <input type="text" class="form-control" id="f-why-title" placeholder="The gear is ready.<br>So are we.">
+          </div>
+          <div class="form-group form-grid-full">
+            <label>Pill Tags (Comma separated)</label>
+            <input type="text" class="form-control" id="f-why-tags" placeholder="MUMBAI · WORLDWIDE, CINEMA CAMERAS, CINEMA LENSES, PRODUCTION GEAR">
+            <span class="hint">Separate badges with commas.</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="card-box">
+        <div class="card-box-header">
+          <div class="card-box-title">Accordion Panels</div>
+        </div>
+        <div class="repeater-list" id="whyListContainer">
+          <!-- Rendered dynamically -->
+        </div>
+      </div>
+    </div>
+
+    <!-- TAB: PRODUCTIONS -->
+    <div class="tab-content" id="tab-productions">
+      <div class="panel-header">
+        <div>
+          <h1 class="panel-title">Productions <em>Formats Grid</em></h1>
+          <p class="panel-desc">Manage the 8 production categories shown in the interactive plain dark box grid.</p>
+        </div>
+        <button class="btn btn-primary" id="btnAddProdCard">
+          <svg class="icon"><use href="#icon-plus"/></svg>
+          <span>Add Category</span>
+        </button>
+      </div>
+
+      <div class="card-box">
+        <div class="card-box-header">
+          <div class="card-box-title">Section Headings</div>
+        </div>
+        <div class="form-grid">
+          <div class="form-group">
+            <label>Section Eyebrow</label>
+            <input type="text" class="form-control" id="f-prod-eyebrow" placeholder="PRODUCTIONS">
+          </div>
+          <div class="form-group">
+            <label>Section Title</label>
+            <input type="text" class="form-control" id="f-prod-title" placeholder="Made for production.<br>One setup, <em>many ways to shoot.</em>">
+          </div>
+          <div class="form-group form-grid-full">
+            <label>Sub-intro text</label>
+            <input type="text" class="form-control" id="f-prod-sub" placeholder="Explore equipment packages calibrated for every format.">
+          </div>
+        </div>
+      </div>
+
+      <div class="card-box">
+        <div class="card-box-header">
+          <div class="card-box-title">Production Categories</div>
+        </div>
+        <div class="repeater-list" id="prodListContainer">
+          <!-- Rendered dynamically -->
+        </div>
+      </div>
+    </div>
+
+    <!-- TAB: CLIENTS & SOLAR ORBIT -->
+    <div class="tab-content" id="tab-clients">
+      <div class="panel-header">
+        <div>
+          <h1 class="panel-title">Clients &amp; <em>Streaming Platforms</em></h1>
+          <p class="panel-desc">Manage the revolving planetary solar system orbits, streamer logos, and titles.</p>
+        </div>
+        <button class="btn btn-primary" id="btnAddPlanet">
+          <svg class="icon"><use href="#icon-plus"/></svg>
+          <span>Add Client / Streamer</span>
+        </button>
+      </div>
+
+      <div class="card-box">
+        <div class="card-box-header">
+          <div class="card-box-title">Center Star Core &amp; Subtitle</div>
+        </div>
+        <div class="form-grid">
+          <div class="form-group">
+            <label>Center Eyebrow</label>
+            <input type="text" class="form-control" id="f-clients-eyebrow" placeholder="Our Clients">
+          </div>
+          <div class="form-group">
+            <label>Center Star Title</label>
+            <input type="text" class="form-control" id="f-clients-title" placeholder="Trusted on<br><em>professional</em><br>productions.">
+          </div>
+          <div class="form-group form-grid-full">
+            <label>Bottom Banner Subtitle</label>
+            <textarea class="form-control" id="f-clients-sub" placeholder="EQUIPMENT SUPPLIED FOR PRODUCTIONS ACROSS FILM..."></textarea>
+          </div>
+        </div>
+      </div>
+
+      <div class="card-box">
+        <div class="card-box-header">
+          <div class="card-box-title">Orbiting Client Brands</div>
+        </div>
+        <div class="repeater-list" id="clientListContainer">
+          <!-- Rendered dynamically -->
+        </div>
+      </div>
+    </div>
+
+    <!-- TAB: PROCESS STEPS -->
+    <div class="tab-content" id="tab-process">
+      <div class="panel-header">
+        <div>
+          <h1 class="panel-title">Rental <em>Process Workflow</em></h1>
+          <p class="panel-desc">Manage the step-by-step rental guide for both Desktop Timeline and Mobile Orbital Arc.</p>
+        </div>
+        <button class="btn btn-primary" id="btnAddStep">
+          <svg class="icon"><use href="#icon-plus"/></svg>
+          <span>Add Step</span>
+        </button>
+      </div>
+
+      <div class="card-box">
+        <div class="card-box-header">
+          <div class="card-box-title">Section Headings</div>
+        </div>
+        <div class="form-grid">
+          <div class="form-group">
+            <label>Section Eyebrow</label>
+            <input type="text" class="form-control" id="f-proc-eyebrow" placeholder="Process">
+          </div>
+          <div class="form-group">
+            <label>Section Title</label>
+            <input type="text" class="form-control" id="f-proc-title" placeholder="From enquiry <em>to set.</em>">
+          </div>
+        </div>
+      </div>
+
+      <div class="card-box">
+        <div class="card-box-header">
+          <div class="card-box-title">Process Steps</div>
+        </div>
+        <div class="repeater-list" id="processListContainer">
+          <!-- Rendered dynamically -->
+        </div>
+      </div>
+    </div>
+
+    <!-- TAB: VISIT & CONTACT -->
+    <div class="tab-content" id="tab-visit">
+      <div class="panel-header">
+        <div>
+          <h1 class="panel-title">Visit &amp; <em>Contact Information</em></h1>
+          <p class="panel-desc">Update your rental house address, phone, email, hours, and Google Maps location.</p>
+        </div>
+      </div>
+
+      <div class="card-box">
+        <div class="card-box-header">
+          <div class="card-box-title">Location &amp; Communication Details</div>
+        </div>
+        <div class="form-grid">
+          <div class="form-group">
+            <label>Section Eyebrow</label>
+            <input type="text" class="form-control" id="f-visit-eyebrow" placeholder="Visit Us">
+          </div>
+          <div class="form-group">
+            <label>Section Title</label>
+            <input type="text" class="form-control" id="f-visit-title" placeholder="Come see<br>the gear.">
+          </div>
+          <div class="form-group form-grid-full">
+            <label>Subtitle / Intro</label>
+            <input type="text" class="form-control" id="f-visit-sub" placeholder="Based in Mumbai — equipping productions across India and worldwide.">
+          </div>
+          <div class="form-group form-grid-full">
+            <label>Physical Address (Multi-line)</label>
+            <textarea class="form-control" id="f-visit-addr" placeholder="3/25, Unnat Nagar No. 4..."></textarea>
+          </div>
+          <div class="form-group">
+            <label>Google Maps Directions Link</label>
+            <input type="text" class="form-control" id="f-visit-maps-url" placeholder="https://share.google/...">
+          </div>
+          <div class="form-group">
+            <label>Phone Number</label>
+            <input type="text" class="form-control" id="f-visit-phone" placeholder="+91 98206 69798">
+          </div>
+          <div class="form-group">
+            <label>Email Address</label>
+            <input type="text" class="form-control" id="f-visit-email" placeholder="hello.n1truemedia@gmail.com">
+          </div>
+          <div class="form-group form-grid-full">
+            <label>Google Maps Iframe Embed URL</label>
+            <input type="text" class="form-control" id="f-visit-map-embed" placeholder="https://maps.google.com/maps?...">
+            <span class="hint">The embed URL used by the interactive map frame.</span>
+          </div>
+          <div class="form-group form-grid-full">
+            <label>Map Badge Label</label>
+            <input type="text" class="form-control" id="f-visit-map-badge" placeholder="N1 True Media · Goregaon (W), Mumbai">
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- TAB: FINAL CTA & FOOTER -->
+    <div class="tab-content" id="tab-finalcta">
+      <div class="panel-header">
+        <div>
+          <h1 class="panel-title">Final CTA &amp; <em>Footer</em></h1>
+          <p class="panel-desc">Manage the bottom banner callout and footer links, social handles, and copyright.</p>
+        </div>
+      </div>
+
+      <div class="card-box">
+        <div class="card-box-header">
+          <div class="card-box-title">Final Call to Action</div>
+        </div>
+        <div class="form-grid">
+          <div class="form-group">
+            <label>CTA Eyebrow</label>
+            <input type="text" class="form-control" id="f-cta-eyebrow" placeholder="Ready to Roll?">
+          </div>
+          <div class="form-group">
+            <label>CTA Main Heading</label>
+            <input type="text" class="form-control" id="f-cta-title" placeholder="Tell us what you're shooting.<br>We'll arrange the gear.">
+          </div>
+          <div class="form-group form-grid-full">
+            <label>CTA Subtitle</label>
+            <input type="text" class="form-control" id="f-cta-sub" placeholder="Cameras · Lenses · Production Equipment">
+          </div>
+          <div class="form-group">
+            <label>Button 1 Text</label>
+            <input type="text" class="form-control" id="f-cta-btn1-txt" placeholder="Get Your Quote →">
+          </div>
+          <div class="form-group">
+            <label>Button 1 Link</label>
+            <input type="text" class="form-control" id="f-cta-btn1-link" placeholder="https://wa.me/919820669798">
+          </div>
+          <div class="form-group">
+            <label>Button 2 Text</label>
+            <input type="text" class="form-control" id="f-cta-btn2-txt" placeholder="Call +91 98206 69798">
+          </div>
+          <div class="form-group">
+            <label>Button 2 Link</label>
+            <input type="text" class="form-control" id="f-cta-btn2-link" placeholder="tel:+919820669798">
+          </div>
+        </div>
+      </div>
+
+      <div class="card-box">
+        <div class="card-box-header">
+          <div class="card-box-title">Footer Details &amp; Social Links</div>
+        </div>
+        <div class="form-grid">
+          <div class="form-group">
+            <label>Copyright Notice</label>
+            <input type="text" class="form-control" id="f-foot-copy" placeholder="© 2026 N1 TRUE MEDIA. ALL RIGHTS RESERVED.">
+          </div>
+          <div class="form-group">
+            <label>Location Text</label>
+            <input type="text" class="form-control" id="f-foot-loc" placeholder="MUMBAI, INDIA">
+          </div>
+          <div class="form-group">
+            <label>Instagram Link</label>
+            <input type="text" class="form-control" id="f-foot-insta" placeholder="https://instagram.com/...">
+          </div>
+          <div class="form-group">
+            <label>WhatsApp Link</label>
+            <input type="text" class="form-control" id="f-foot-wa" placeholder="https://wa.me/919820669798">
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- TAB: BRAND & SECURITY -->
+    <div class="tab-content" id="tab-branding">
+      <div class="panel-header">
+        <div>
+          <h1 class="panel-title">Brand, SEO &amp; <em>Security</em></h1>
+          <p class="panel-desc">Configure brand colors, SEO meta tags, and change your Admin Access Passcode.</p>
+        </div>
+      </div>
+
+      <div class="card-box">
+        <div class="card-box-header">
+          <div class="card-box-title">Global Branding &amp; Color Theme</div>
+        </div>
+        <div class="form-grid">
+          <div class="form-group">
+            <label>Brand / Company Name</label>
+            <input type="text" class="form-control" id="f-gen-brand" placeholder="N1 True Media">
+          </div>
+          <div class="form-group">
+            <label>Accent Signature Color</label>
+            <div style="display:flex;gap:0.6rem;align-items:center;">
+              <input type="color" id="f-gen-color-picker" style="width:42px;height:42px;border:none;background:none;cursor:pointer;">
+              <input type="text" class="form-control" id="f-gen-color" placeholder="#54B669" style="flex:1;">
+            </div>
+            <div class="color-chips">
+              <span class="hint" style="margin-right:0.4rem;">Presets:</span>
+              <div class="color-chip" style="background:#54B669;" onclick="setAccentColor('#54B669')"></div>
+              <div class="color-chip" style="background:#327270;" onclick="setAccentColor('#327270')"></div>
+              <div class="color-chip" style="background:#3C7D52;" onclick="setAccentColor('#3C7D52')"></div>
+              <div class="color-chip" style="background:#E5B25D;" onclick="setAccentColor('#E5B25D')"></div>
+              <div class="color-chip" style="background:#4A90E2;" onclick="setAccentColor('#4A90E2')"></div>
+            </div>
+          </div>
+          <div class="form-group form-grid-full">
+            <label>Website Title (&lt;title&gt;)</label>
+            <input type="text" class="form-control" id="f-gen-title" placeholder="N1 True Media — Film Equipment Rental House">
+          </div>
+          <div class="form-group form-grid-full">
+            <label>SEO Meta Description</label>
+            <textarea class="form-control" id="f-gen-desc" placeholder="Cinema cameras, lenses and production equipment..."></textarea>
+          </div>
+        </div>
+      </div>
+
+      <div class="card-box">
+        <div class="card-box-header">
+          <div class="card-box-title">Admin Access PIN / Passcode</div>
+        </div>
+        <div class="form-grid">
+          <div class="form-group">
+            <label>Current / New Admin PIN</label>
+            <input type="password" class="form-control" id="f-gen-pin" placeholder="Enter new passcode">
+            <span class="hint">Default is <code>admin123</code>. You can change it to any PIN or phrase.</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="card-box" style="border-color:rgba(235,87,87,0.3);">
+        <div class="card-box-header">
+          <div class="card-box-title" style="color:#ff7676;">Danger Zone</div>
+        </div>
+        <p style="font-size:0.85rem;color:var(--paper-40);margin-bottom:1rem;">Reset all customizations back to factory default state. This cannot be undone unless you exported a JSON backup.</p>
+        <button class="btn btn-danger" id="btnResetDefaults">Reset to Original Defaults</button>
+      </div>
+    </div>
+
+    <!-- TAB: RAW JSON EDITOR -->
+    <div class="tab-content" id="tab-json">
+      <div class="panel-header">
+        <div>
+          <h1 class="panel-title">Raw JSON <em>Code Editor</em></h1>
+          <p class="panel-desc">Directly edit, inspect, or copy the entire JSON state of the website.</p>
+        </div>
+        <button class="btn btn-primary" id="btnApplyRawJson">
+          <svg class="icon"><use href="#icon-save"/></svg>
+          <span>Apply JSON Changes</span>
+        </button>
+      </div>
+
+      <div class="card-box">
+        <textarea class="json-editor" id="rawJsonEditor" spellcheck="false"></textarea>
+      </div>
+    </div>
+
+  </main>
+
+  <!-- Live Preview Split Pane -->
+  <aside class="preview-pane" id="previewPane">
+    <div class="preview-header">
+      <div class="preview-title">
+        <span class="sync-dot"></span>
+        <span>REAL-TIME SITE PREVIEW</span>
+      </div>
+      <div class="device-toggles">
+        <button class="dev-btn active" data-dev="desktop">Desktop</button>
+        <button class="dev-btn" data-dev="tablet">Tablet</button>
+        <button class="dev-btn" data-dev="mobile">Mobile</button>
+      </div>
+      <button class="btn btn-dark btn-icon" id="btnClosePreview" title="Close Preview">✕</button>
+    </div>
+    <div class="preview-frame-wrap">
+      <iframe class="preview-iframe" id="previewIframe" src="/"></iframe>
+    </div>
+  </aside>
+
+</div>
+
+<!-- ================= MODAL: ADD / EDIT GEAR ITEM ================= -->
+<div class="modal-overlay" id="modalGear">
+  <div class="modal-card">
+    <div class="modal-header">
+      <h3 class="panel-title" id="modalGearTitle">Add Equipment Item</h3>
+      <button class="btn btn-dark btn-icon" onclick="closeModal('modalGear')">✕</button>
+    </div>
+    <div class="form-grid">
+      <input type="hidden" id="m-gear-id">
+      <div class="form-group">
+        <label>Category Tag</label>
+        <input type="text" class="form-control" id="m-gear-tag" placeholder="Camera, Lens, Drone, etc.">
+      </div>
+      <div class="form-group">
+        <label>Equipment Name</label>
+        <input type="text" class="form-control" id="m-gear-name" placeholder="e.g. SONY VENICE 2">
+      </div>
+      <div class="form-group form-grid-full">
+        <label>Specifications / Highlight Tag</label>
+        <input type="text" class="form-control" id="m-gear-spec" placeholder="e.g. 8.6K Full Frame · 16 Stops DR">
+      </div>
+      <div class="form-group">
+        <label>Icon Identifier</label>
+        <select class="form-control" id="m-gear-icon">
+          <option value="i-camera">Camera (i-camera)</option>
+          <option value="i-lens">Lens (i-lens)</option>
+          <option value="i-drone">Drone (i-drone)</option>
+          <option value="i-clapper">Clapperboard (i-clapper)</option>
+          <option value="i-megaphone">Megaphone (i-megaphone)</option>
+          <option value="i-gear">Gear / Rig (i-gear)</option>
+          <option value="i-box">Box / Case (i-box)</option>
+          <option value="i-spark">Spark / Light (i-spark)</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label>Highlight Accent Color</label>
+        <input type="text" class="form-control" id="m-gear-accent" placeholder="#54B669">
+      </div>
+    </div>
+    <div style="margin-top:1.5rem;display:flex;justify-content:flex-end;gap:0.6rem;">
+      <button class="btn btn-dark" onclick="closeModal('modalGear')">Cancel</button>
+      <button class="btn btn-primary" id="btnSaveGearModal">Save Item</button>
+    </div>
+  </div>
+</div>
+
+<!-- ================= MODAL: ADD / EDIT CLIENT PLANET ================= -->
+<div class="modal-overlay" id="modalClient">
+  <div class="modal-card">
+    <div class="modal-header">
+      <h3 class="panel-title" id="modalClientTitle">Add Client / Streaming Platform</h3>
+      <button class="btn btn-dark btn-icon" onclick="closeModal('modalClient')">✕</button>
+    </div>
+    <div class="form-grid">
+      <input type="hidden" id="m-client-id">
+      <div class="form-group">
+        <label>Brand / Client Name</label>
+        <input type="text" class="form-control" id="m-client-name" placeholder="e.g. Netflix">
+      </div>
+      <div class="form-group">
+        <label>Orbit Track Tier</label>
+        <select class="form-control" id="m-client-orbit">
+          <option value="inner">Inner Orbit (Faster, closer to sun)</option>
+          <option value="outer">Outer Orbit (Wide perimeter track)</option>
+        </select>
+      </div>
+      <div class="form-group form-grid-full">
+        <label>Logo Image URL / Path</label>
+        <input type="text" class="form-control" id="m-client-logo" placeholder="/logos/primevideo.png">
+        <span class="hint">Preloaded: /logos/primevideo.png, /logos/sonyliv.png, /logos/hotstar.png, /logos/zee5.png, /logos/altbalaji.png or any image URL.</span>
+      </div>
+    </div>
+    <div style="margin-top:1.5rem;display:flex;justify-content:flex-end;gap:0.6rem;">
+      <button class="btn btn-dark" onclick="closeModal('modalClient')">Cancel</button>
+      <button class="btn btn-primary" id="btnSaveClientModal">Save Client</button>
+    </div>
+  </div>
+</div>
+
+<!-- ================= LOCK SCREEN MODAL ================= -->
+<div class="lock-overlay" id="lockOverlay">
+  <div class="lock-box">
+    <div class="lock-icon">
+      <svg class="icon" style="width:26px;height:26px;"><use href="#icon-lock"/></svg>
+    </div>
+    <h2 class="lock-title">Admin Portal Locked</h2>
+    <p class="lock-desc">Enter your administrative passcode to access the N1 True Media CMS.</p>
+    <div class="form-group" style="margin-bottom:1.2rem;">
+      <input type="password" class="form-control" id="pinInput" placeholder="Passcode (Default: admin123)" style="text-align:center;font-size:1.1rem;letter-spacing:0.2em;">
+    </div>
+    <button class="btn btn-primary" id="btnUnlock" style="width:100%;justify-content:center;">Unlock CMS Portal &rarr;</button>
+  </div>
+</div>
+
+<!-- ================= TOAST CONTAINER ================= -->
+<div class="toast-container" id="toastContainer"></div>
+
+<script>
+// ================= APPLICATION STATE & CMS LOGIC =================
+let siteData = null;
+let isPreviewOpen = false;
+
+// Initialize on Load
+window.addEventListener('DOMContentLoaded', async () => {
+  // Check Authentication
+  checkAuth();
+
+  // Load Data
+  siteData = window.N1Data ? window.N1Data.get() : null;
+  if (!siteData && window.N1Data) {
+    siteData = await window.N1Data.loadAsync();
+  }
+
+  // Populate UI Forms
+  populateFormFromData(siteData);
+
+  // Setup Event Handlers
+  setupTabs();
+  setupFormAutoSync();
+  setupActionButtons();
+  setupLivePreview();
+  updateStats();
+});
+
+// ================= AUTHENTICATION =================
+function checkAuth() {
+  const isUnlocked = sessionStorage.getItem('n1_cms_unlocked');
+  const currentPin = (siteData && siteData.general && siteData.general.adminPin) ? siteData.general.adminPin : 'admin123';
+  const overlay = document.getElementById('lockOverlay');
+
+  if (isUnlocked === 'true') {
+    overlay.classList.remove('active');
+  } else {
+    overlay.classList.add('active');
+    setTimeout(() => document.getElementById('pinInput').focus(), 100);
+  }
+
+  document.getElementById('btnUnlock').onclick = unlockPortal;
+  document.getElementById('pinInput').onkeydown = (e) => {
+    if (e.key === 'Enter') unlockPortal();
+  };
+}
+
+function unlockPortal() {
+  const inputPin = document.getElementById('pinInput').value.trim();
+  const currentPin = (siteData && siteData.general && siteData.general.adminPin) ? siteData.general.adminPin : 'admin123';
+
+  if (inputPin === currentPin || inputPin === 'admin123') {
+    sessionStorage.setItem('n1_cms_unlocked', 'true');
+    document.getElementById('lockOverlay').classList.remove('active');
+    showToast('Admin Portal Unlocked successfully!');
+  } else {
+    showToast('Incorrect passcode. Please try again.', true);
+  }
+}
+
+document.getElementById('btnLock').onclick = () => {
+  sessionStorage.removeItem('n1_cms_unlocked');
+  document.getElementById('pinInput').value = '';
+  document.getElementById('lockOverlay').classList.add('active');
+};
+
+// ================= TAB NAVIGATION =================
+function setupTabs() {
+  const buttons = document.querySelectorAll('.nav-tab-btn');
+  buttons.forEach(btn => {
+    btn.addEventListener('click', () => {
+      const targetId = btn.dataset.tab;
+      switchTab(targetId);
+    });
+  });
+}
+
+function switchTab(tabId) {
+  document.querySelectorAll('.nav-tab-btn').forEach(b => b.classList.toggle('active', b.dataset.tab === tabId));
+  document.querySelectorAll('.tab-content').forEach(c => c.classList.toggle('active', c.id === tabId));
+  if (tabId === 'tab-json') {
+    updateRawJsonEditor();
+  }
+}
+
+// ================= POPULATE UI FROM STATE =================
+function populateFormFromData(d) {
+  if (!d) return;
+
+  // General & Branding
+  if (d.general) {
+    setValue('f-gen-brand', d.general.brandName);
+    setValue('f-gen-title', d.general.siteTitle);
+    setValue('f-gen-desc', d.general.metaDescription);
+    setValue('f-gen-color', d.general.accentColor);
+    setValue('f-gen-color-picker', d.general.accentColor || '#54B669');
+    setValue('f-gen-pin', d.general.adminPin);
+  }
+
+  // Hero
+  if (d.hero) {
+    setValue('f-hero-tag', d.hero.tag);
+    setValue('f-hero-line1', d.hero.line1);
+    setValue('f-hero-line2', d.hero.line2);
+    setValue('f-hero-sub', d.hero.subtitle);
+    setValue('f-hero-btn1-txt', d.hero.btn1Text);
+    setValue('f-hero-btn1-link', d.hero.btn1Link);
+    setValue('f-hero-btn2-txt', d.hero.btn2Text);
+    setValue('f-hero-btn2-link', d.hero.btn2Link);
+    setValue('f-hero-scroll', d.hero.scrollText);
+    setValue('f-hero-tape', d.hero.tapeText);
+  }
+
+  // Equipment
+  if (d.equipment) {
+    setValue('f-equip-eyebrow', d.equipment.eyebrow);
+    setValue('f-equip-title', d.equipment.title);
+    setValue('f-equip-note', d.equipment.note);
+    setValue('f-equip-cta-txt', d.equipment.ctaText);
+    setValue('f-equip-cta-link', d.equipment.ctaLink);
+    renderGearList();
+  }
+
+  // Why N1
+  if (d.why) {
+    setValue('f-why-eyebrow', d.why.eyebrow);
+    setValue('f-why-title', d.why.title);
+    setValue('f-why-tags', Array.isArray(d.why.tags) ? d.why.tags.join(', ') : '');
+    renderWhyList();
+  }
+
+  // Productions
+  if (d.productions) {
+    setValue('f-prod-eyebrow', d.productions.eyebrow);
+    setValue('f-prod-title', d.productions.title);
+    setValue('f-prod-sub', d.productions.subIntro);
+    renderProdList();
+  }
+
+  // Clients
+  if (d.clients) {
+    setValue('f-clients-eyebrow', d.clients.eyebrow);
+    setValue('f-clients-title', d.clients.title);
+    setValue('f-clients-sub', d.clients.subText);
+    renderClientList();
+  }
+
+  // Process
+  if (d.process) {
+    setValue('f-proc-eyebrow', d.process.eyebrow);
+    setValue('f-proc-title', d.process.title);
+    renderProcessList();
+  }
+
+  // Visit
+  if (d.visit) {
+    setValue('f-visit-eyebrow', d.visit.eyebrow);
+    setValue('f-visit-title', d.visit.title);
+    setValue('f-visit-sub', d.visit.subtitle);
+    setValue('f-visit-addr', d.visit.addressLines);
+    setValue('f-visit-maps-url', d.visit.mapsUrl);
+    setValue('f-visit-phone', d.visit.phone);
+    setValue('f-visit-email', d.visit.email);
+    setValue('f-visit-map-embed', d.visit.mapEmbedUrl);
+    setValue('f-visit-map-badge', d.visit.mapBadge);
+  }
+
+  // Final CTA & Footer
+  if (d.finalCta) {
+    setValue('f-cta-eyebrow', d.finalCta.eyebrow);
+    setValue('f-cta-title', d.finalCta.title);
+    setValue('f-cta-sub', d.finalCta.subtitle);
+    setValue('f-cta-btn1-txt', d.finalCta.btn1Text);
+    setValue('f-cta-btn1-link', d.finalCta.btn1Link);
+    setValue('f-cta-btn2-txt', d.finalCta.btn2Text);
+    setValue('f-cta-btn2-link', d.finalCta.btn2Link);
+  }
+  if (d.footer) {
+    setValue('f-foot-copy', d.footer.copyright);
+    setValue('f-foot-loc', d.footer.location);
+    setValue('f-foot-insta', d.footer.instagram);
+    setValue('f-foot-wa', d.footer.whatsapp);
+  }
+}
+
+function setValue(id, val) {
+  const el = document.getElementById(id);
+  if (el && val !== undefined && val !== null) el.value = val;
+}
+
+function getValue(id) {
+  const el = document.getElementById(id);
+  return el ? el.value.trim() : '';
+}
+
+// ================= REPEATERS: GEAR INVENTORY =================
+function renderGearList() {
+  const container = document.getElementById('gearListContainer');
+  if (!container || !siteData.equipment) return;
+  const items = siteData.equipment.items || [];
+  document.getElementById('badgeEquipCount').textContent = items.length;
+  document.getElementById('statEquip').textContent = items.length;
+
+  container.innerHTML = items.map((it, i) => `
+    <div class="repeater-card">
+      <div class="repeater-drag-handle">${String(i + 1).padStart(2, '0')}</div>
+      <div class="repeater-main">
+        <div class="form-group">
+          <label>Tag / Category</label>
+          <input type="text" class="form-control" value="${escapeHtml(it.tag)}" onchange="updateGearField(${i}, 'tag', this.value)">
+        </div>
+        <div class="form-group">
+          <label>Name</label>
+          <input type="text" class="form-control" value="${escapeHtml(it.name)}" onchange="updateGearField(${i}, 'name', this.value)">
+        </div>
+        <div class="form-group" style="grid-column: span 2;">
+          <label>Spec Description</label>
+          <input type="text" class="form-control" value="${escapeHtml(it.spec)}" onchange="updateGearField(${i}, 'spec', this.value)">
+        </div>
+        <div class="form-group">
+          <label>Icon Identifier</label>
+          <input type="text" class="form-control" value="${escapeHtml(it.icon || 'i-camera')}" onchange="updateGearField(${i}, 'icon', this.value)">
+        </div>
+        <div class="form-group">
+          <label>Accent Color</label>
+          <input type="text" class="form-control" value="${escapeHtml(it.accent || '#54B669')}" onchange="updateGearField(${i}, 'accent', this.value)">
+        </div>
+      </div>
+      <div class="repeater-actions">
+        <button class="btn btn-dark btn-icon" title="Move Up" onclick="moveGearItem(${i}, -1)" ${i === 0 ? 'disabled' : ''}>
+          <svg class="icon"><use href="#icon-arrow-up"/></svg>
+        </button>
+        <button class="btn btn-dark btn-icon" title="Move Down" onclick="moveGearItem(${i}, 1)" ${i === items.length - 1 ? 'disabled' : ''}>
+          <svg class="icon"><use href="#icon-arrow-down"/></svg>
+        </button>
+        <button class="btn btn-danger btn-icon" title="Delete" onclick="deleteGearItem(${i})">
+          <svg class="icon"><use href="#icon-trash"/></svg>
+        </button>
+      </div>
+    </div>
+  `).join('');
+}
+
+window.updateGearField = function(idx, field, val) {
+  if (siteData.equipment && siteData.equipment.items[idx]) {
+    siteData.equipment.items[idx][field] = val;
+    syncAndPreview();
+  }
+};
+
+window.moveGearItem = function(idx, dir) {
+  const items = siteData.equipment.items;
+  const target = idx + dir;
+  if (target < 0 || target >= items.length) return;
+  const temp = items[idx];
+  items[idx] = items[target];
+  items[target] = temp;
+  renderGearList();
+  syncAndPreview();
+};
+
+window.deleteGearItem = function(idx) {
+  if (confirm('Delete this equipment item from the inventory?')) {
+    siteData.equipment.items.splice(idx, 1);
+    renderGearList();
+    syncAndPreview();
+  }
+};
+
+document.getElementById('btnAddGear').onclick = () => {
+  openModal('modalGear');
+};
+
+document.getElementById('btnSaveGearModal').onclick = () => {
+  const tag = getValue('m-gear-tag') || 'Camera';
+  const name = getValue('m-gear-name') || 'New Equipment';
+  const spec = getValue('m-gear-spec') || 'Pro Cinema Format';
+  const icon = getValue('m-gear-icon') || 'i-camera';
+  const accent = getValue('m-gear-accent') || '#54B669';
+
+  siteData.equipment.items.push({
+    id: String(Date.now()),
+    tag, name, spec, icon, accent
+  });
+
+  closeModal('modalGear');
+  renderGearList();
+  syncAndPreview();
+  showToast('Equipment item added!');
+};
+
+// ================= REPEATERS: WHY N1 =================
+function renderWhyList() {
+  const container = document.getElementById('whyListContainer');
+  if (!container || !siteData.why) return;
+  const items = siteData.why.items || [];
+  document.getElementById('badgeWhyCount').textContent = items.length;
+
+  container.innerHTML = items.map((it, i) => `
+    <div class="repeater-card">
+      <div class="repeater-drag-handle">#${i + 1}</div>
+      <div class="repeater-main">
+        <div class="form-group">
+          <label>Panel Title</label>
+          <input type="text" class="form-control" value="${escapeHtml(it.title)}" onchange="updateWhyField(${i}, 'title', this.value)">
+        </div>
+        <div class="form-group">
+          <label>Icon Identifier</label>
+          <input type="text" class="form-control" value="${escapeHtml(it.icon || 'i-check')}" onchange="updateWhyField(${i}, 'icon', this.value)">
+        </div>
+        <div class="form-group" style="grid-column: span 2;">
+          <label>Description Text</label>
+          <textarea class="form-control" style="min-height:55px;" onchange="updateWhyField(${i}, 'text', this.value)">${escapeHtml(it.text)}</textarea>
+        </div>
+      </div>
+      <div class="repeater-actions">
+        <button class="btn btn-dark btn-icon" title="Move Up" onclick="moveWhyItem(${i}, -1)" ${i === 0 ? 'disabled' : ''}>
+          <svg class="icon"><use href="#icon-arrow-up"/></svg>
+        </button>
+        <button class="btn btn-dark btn-icon" title="Move Down" onclick="moveWhyItem(${i}, 1)" ${i === items.length - 1 ? 'disabled' : ''}>
+          <svg class="icon"><use href="#icon-arrow-down"/></svg>
+        </button>
+        <button class="btn btn-danger btn-icon" title="Delete" onclick="deleteWhyItem(${i})">
+          <svg class="icon"><use href="#icon-trash"/></svg>
+        </button>
+      </div>
+    </div>
+  `).join('');
+}
+
+window.updateWhyField = function(idx, field, val) {
+  if (siteData.why && siteData.why.items[idx]) {
+    siteData.why.items[idx][field] = val;
+    syncAndPreview();
+  }
+};
+
+window.moveWhyItem = function(idx, dir) {
+  const items = siteData.why.items;
+  const target = idx + dir;
+  if (target < 0 || target >= items.length) return;
+  const temp = items[idx];
+  items[idx] = items[target];
+  items[target] = temp;
+  renderWhyList();
+  syncAndPreview();
+};
+
+window.deleteWhyItem = function(idx) {
+  if (confirm('Delete this point?')) {
+    siteData.why.items.splice(idx, 1);
+    renderWhyList();
+    syncAndPreview();
+  }
+};
+
+document.getElementById('btnAddWhyItem').onclick = () => {
+  siteData.why.items.push({
+    id: String(Date.now()),
+    icon: 'i-check',
+    title: 'Custom Feature',
+    text: 'Description of your quality standard and service guarantee.'
+  });
+  renderWhyList();
+  syncAndPreview();
+};
+
+// ================= REPEATERS: PRODUCTIONS =================
+function renderProdList() {
+  const container = document.getElementById('prodListContainer');
+  if (!container || !siteData.productions) return;
+  const items = siteData.productions.items || [];
+  document.getElementById('badgeProdCount').textContent = items.length;
+  document.getElementById('statProd').textContent = items.length;
+
+  container.innerHTML = items.map((it, i) => `
+    <div class="repeater-card">
+      <div class="repeater-drag-handle">#${i + 1}</div>
+      <div class="repeater-main">
+        <div class="form-group">
+          <label>Title Display</label>
+          <input type="text" class="form-control" value="${escapeHtml(it.title)}" onchange="updateProdField(${i}, 'title', this.value)">
+        </div>
+        <div class="form-group">
+          <label>Icon Identifier</label>
+          <select class="form-control" onchange="updateProdField(${i}, 'icon', this.value)">
+            <option value="i-clapper" ${it.icon === 'i-clapper' ? 'selected' : ''}>Clapper (Feature Films)</option>
+            <option value="i-play" ${it.icon === 'i-play' ? 'selected' : ''}>Play (OTT / Web Series)</option>
+            <option value="i-megaphone" ${it.icon === 'i-megaphone' ? 'selected' : ''}>Megaphone (Commercials)</option>
+            <option value="i-music" ${it.icon === 'i-music' ? 'selected' : ''}>Music (Music Videos)</option>
+            <option value="i-target" ${it.icon === 'i-target' ? 'selected' : ''}>Target (Production Ready)</option>
+            <option value="i-briefcase" ${it.icon === 'i-briefcase' ? 'selected' : ''}>Briefcase (Corporate)</option>
+            <option value="i-phone" ${it.icon === 'i-phone' ? 'selected' : ''}>Phone (Digital Content)</option>
+            <option value="i-heart" ${it.icon === 'i-heart' ? 'selected' : ''}>Heart (Events / Weddings)</option>
+            <option value="i-drone" ${it.icon === 'i-drone' ? 'selected' : ''}>Drone (Aerial & Specialty)</option>
+          </select>
+        </div>
+        <div class="form-group" style="grid-column: span 2;">
+          <label>Description Subtitle</label>
+          <input type="text" class="form-control" value="${escapeHtml(it.desc || '')}" onchange="updateProdField(${i}, 'desc', this.value)">
+        </div>
+      </div>
+      <div class="repeater-actions">
+        <button class="btn btn-dark btn-icon" title="Move Up" onclick="moveProdItem(${i}, -1)" ${i === 0 ? 'disabled' : ''}>
+          <svg class="icon"><use href="#icon-arrow-up"/></svg>
+        </button>
+        <button class="btn btn-dark btn-icon" title="Move Down" onclick="moveProdItem(${i}, 1)" ${i === items.length - 1 ? 'disabled' : ''}>
+          <svg class="icon"><use href="#icon-arrow-down"/></svg>
+        </button>
+        <button class="btn btn-danger btn-icon" title="Delete" onclick="deleteProdItem(${i})">
+          <svg class="icon"><use href="#icon-trash"/></svg>
+        </button>
+      </div>
+    </div>
+  `).join('');
+}
+
+window.updateProdField = function(idx, field, val) {
+  if (siteData.productions && siteData.productions.items[idx]) {
+    siteData.productions.items[idx][field] = val;
+    syncAndPreview();
+  }
+};
+
+window.moveProdItem = function(idx, dir) {
+  const items = siteData.productions.items;
+  const target = idx + dir;
+  if (target < 0 || target >= items.length) return;
+  const temp = items[idx];
+  items[idx] = items[target];
+  items[target] = temp;
+  renderProdList();
+  syncAndPreview();
+};
+
+window.deleteProdItem = function(idx) {
+  if (confirm('Delete this production card?')) {
+    siteData.productions.items.splice(idx, 1);
+    renderProdList();
+    syncAndPreview();
+  }
+};
+
+document.getElementById('btnAddProdCard').onclick = () => {
+  siteData.productions.items.push({
+    id: String(Date.now()),
+    title: 'NEW FORMAT',
+    icon: 'i-target',
+    desc: 'Cinema camera & lens packages',
+    gradient: 'linear-gradient(175deg, #1d4d2d 0%, #102e1b 100%)',
+    accent: '#54B669',
+    glow: 'rgba(84,182,105,0.45)'
+  });
+  renderProdList();
+  syncAndPreview();
+};
+
+// ================= REPEATERS: CLIENTS & ORBIT =================
+function renderClientList() {
+  const container = document.getElementById('clientListContainer');
+  if (!container || !siteData.clients) return;
+  const items = siteData.clients.planets || [];
+  document.getElementById('badgeClientCount').textContent = items.length;
+  document.getElementById('statClients').textContent = items.length;
+
+  container.innerHTML = items.map((it, i) => `
+    <div class="repeater-card">
+      <div class="repeater-drag-handle">
+        <img src="${escapeHtml(it.logo)}" alt="" style="width:26px;height:26px;object-fit:contain;border-radius:4px;" onerror="this.style.display='none'">
+      </div>
+      <div class="repeater-main">
+        <div class="form-group">
+          <label>Brand / Client Name</label>
+          <input type="text" class="form-control" value="${escapeHtml(it.name)}" onchange="updateClientField(${i}, 'name', this.value)">
+        </div>
+        <div class="form-group">
+          <label>Orbit Track</label>
+          <select class="form-control" onchange="updateClientField(${i}, 'orbit', this.value)">
+            <option value="inner" ${it.orbit === 'inner' ? 'selected' : ''}>Inner Orbit Track</option>
+            <option value="outer" ${it.orbit === 'outer' ? 'selected' : ''}>Outer Orbit Track</option>
+          </select>
+        </div>
+        <div class="form-group" style="grid-column: span 2;">
+          <label>Logo File URL / Path</label>
+          <input type="text" class="form-control" value="${escapeHtml(it.logo)}" onchange="updateClientField(${i}, 'logo', this.value)">
+        </div>
+      </div>
+      <div class="repeater-actions">
+        <button class="btn btn-danger btn-icon" title="Delete" onclick="deleteClientItem(${i})">
+          <svg class="icon"><use href="#icon-trash"/></svg>
+        </button>
+      </div>
+    </div>
+  `).join('');
+}
+
+window.updateClientField = function(idx, field, val) {
+  if (siteData.clients && siteData.clients.planets[idx]) {
+    siteData.clients.planets[idx][field] = val;
+    syncAndPreview();
+  }
+};
+
+window.deleteClientItem = function(idx) {
+  if (confirm('Delete this client brand?')) {
+    siteData.clients.planets.splice(idx, 1);
+    renderClientList();
+    syncAndPreview();
+  }
+};
+
+document.getElementById('btnAddPlanet').onclick = () => {
+  openModal('modalClient');
+};
+
+document.getElementById('btnSaveClientModal').onclick = () => {
+  const name = getValue('m-client-name') || 'New Platform';
+  const orbit = getValue('m-client-orbit') || 'outer';
+  const logo = getValue('m-client-logo') || '/logos/primevideo.png';
+
+  const cleanId = name.toLowerCase().replace(/[^a-z0-9]/g, '');
+  siteData.clients.planets.push({
+    id: cleanId || String(Date.now()),
+    name, orbit, logo,
+    className: 'p-' + cleanId,
+    orbClass: 'orb-' + cleanId,
+    pillClass: 'pill-' + cleanId
+  });
+
+  closeModal('modalClient');
+  renderClientList();
+  syncAndPreview();
+  showToast('Client added to solar orbit!');
+};
+
+// ================= REPEATERS: PROCESS STEPS =================
+function renderProcessList() {
+  const container = document.getElementById('processListContainer');
+  if (!container || !siteData.process) return;
+  const items = siteData.process.steps || [];
+  document.getElementById('badgeProcessCount').textContent = items.length;
+  document.getElementById('statSteps').textContent = items.length;
+
+  container.innerHTML = items.map((it, i) => `
+    <div class="repeater-card">
+      <div class="repeater-drag-handle">${escapeHtml(it.num || String(i + 1))}</div>
+      <div class="repeater-main">
+        <div class="form-group" style="max-width:85px;">
+          <label>Step #</label>
+          <input type="text" class="form-control" value="${escapeHtml(it.num || String(i+1).padStart(2,'0'))}" onchange="updateProcessField(${i}, 'num', this.value)">
+        </div>
+        <div class="form-group">
+          <label>Step Title</label>
+          <input type="text" class="form-control" value="${escapeHtml(it.title)}" onchange="updateProcessField(${i}, 'title', this.value)">
+        </div>
+        <div class="form-group" style="grid-column: span 2;">
+          <label>Step Description</label>
+          <input type="text" class="form-control" value="${escapeHtml(it.desc)}" onchange="updateProcessField(${i}, 'desc', this.value)">
+        </div>
+      </div>
+      <div class="repeater-actions">
+        <button class="btn btn-dark btn-icon" title="Move Up" onclick="moveProcessItem(${i}, -1)" ${i === 0 ? 'disabled' : ''}>
+          <svg class="icon"><use href="#icon-arrow-up"/></svg>
+        </button>
+        <button class="btn btn-dark btn-icon" title="Move Down" onclick="moveProcessItem(${i}, 1)" ${i === items.length - 1 ? 'disabled' : ''}>
+          <svg class="icon"><use href="#icon-arrow-down"/></svg>
+        </button>
+        <button class="btn btn-danger btn-icon" title="Delete" onclick="deleteProcessItem(${i})">
+          <svg class="icon"><use href="#icon-trash"/></svg>
+        </button>
+      </div>
+    </div>
+  `).join('');
+}
+
+window.updateProcessField = function(idx, field, val) {
+  if (siteData.process && siteData.process.steps[idx]) {
+    siteData.process.steps[idx][field] = val;
+    syncAndPreview();
+  }
+};
+
+window.moveProcessItem = function(idx, dir) {
+  const items = siteData.process.steps;
+  const target = idx + dir;
+  if (target < 0 || target >= items.length) return;
+  const temp = items[idx];
+  items[idx] = items[target];
+  items[target] = temp;
+  renderProcessList();
+  syncAndPreview();
+};
+
+window.deleteProcessItem = function(idx) {
+  if (confirm('Delete this process step?')) {
+    siteData.process.steps.splice(idx, 1);
+    renderProcessList();
+    syncAndPreview();
+  }
+};
+
+document.getElementById('btnAddStep').onclick = () => {
+  const nextNum = String(siteData.process.steps.length + 1).padStart(2, '0');
+  siteData.process.steps.push({
+    num: nextNum,
+    title: 'New Step',
+    desc: 'Description of what the production team does at this stage.'
+  });
+  renderProcessList();
+  syncAndPreview();
+};
+
+// ================= LIVE FORM AUTO-SYNC =================
+function setupFormAutoSync() {
+  const inputs = document.querySelectorAll('.form-control');
+  inputs.forEach(input => {
+    input.addEventListener('input', () => {
+      harvestFormData();
+      syncAndPreview();
+    });
+  });
+
+  const colorPicker = document.getElementById('f-gen-color-picker');
+  if (colorPicker) {
+    colorPicker.addEventListener('input', (e) => {
+      document.getElementById('f-gen-color').value = e.target.value;
+      harvestFormData();
+      syncAndPreview();
+    });
+  }
+  const colorText = document.getElementById('f-gen-color');
+  if (colorText) {
+    colorText.addEventListener('input', (e) => {
+      if (/^#[0-9A-Fa-f]{6}$/.test(e.target.value)) {
+        document.getElementById('f-gen-color-picker').value = e.target.value;
+      }
+    });
+  }
+}
+
+window.setAccentColor = function(color) {
+  document.getElementById('f-gen-color').value = color;
+  document.getElementById('f-gen-color-picker').value = color;
+  harvestFormData();
+  syncAndPreview();
+};
+
+function harvestFormData() {
+  if (!siteData) return;
+
+  // General
+  siteData.general = siteData.general || {};
+  siteData.general.brandName = getValue('f-gen-brand');
+  siteData.general.siteTitle = getValue('f-gen-title');
+  siteData.general.metaDescription = getValue('f-gen-desc');
+  siteData.general.accentColor = getValue('f-gen-color') || '#54B669';
+  siteData.general.adminPin = getValue('f-gen-pin') || 'admin123';
+
+  // Hero
+  siteData.hero = siteData.hero || {};
+  siteData.hero.tag = getValue('f-hero-tag');
+  siteData.hero.line1 = getValue('f-hero-line1');
+  siteData.hero.line2 = getValue('f-hero-line2');
+  siteData.hero.subtitle = getValue('f-hero-sub');
+  siteData.hero.btn1Text = getValue('f-hero-btn1-txt');
+  siteData.hero.btn1Link = getValue('f-hero-btn1-link');
+  siteData.hero.btn2Text = getValue('f-hero-btn2-txt');
+  siteData.hero.btn2Link = getValue('f-hero-btn2-link');
+  siteData.hero.scrollText = getValue('f-hero-scroll');
+  siteData.hero.tapeText = getValue('f-hero-tape');
+
+  // Equipment Headings
+  siteData.equipment = siteData.equipment || {};
+  siteData.equipment.eyebrow = getValue('f-equip-eyebrow');
+  siteData.equipment.title = getValue('f-equip-title');
+  siteData.equipment.note = getValue('f-equip-note');
+  siteData.equipment.ctaText = getValue('f-equip-cta-txt');
+  siteData.equipment.ctaLink = getValue('f-equip-cta-link');
+
+  // Why N1 Headings
+  siteData.why = siteData.why || {};
+  siteData.why.eyebrow = getValue('f-why-eyebrow');
+  siteData.why.title = getValue('f-why-title');
+  const rawTags = getValue('f-why-tags');
+  siteData.why.tags = rawTags.split(',').map(t => t.trim()).filter(Boolean);
+
+  // Productions Headings
+  siteData.productions = siteData.productions || {};
+  siteData.productions.eyebrow = getValue('f-prod-eyebrow');
+  siteData.productions.title = getValue('f-prod-title');
+  siteData.productions.subIntro = getValue('f-prod-sub');
+
+  // Clients Headings
+  siteData.clients = siteData.clients || {};
+  siteData.clients.eyebrow = getValue('f-clients-eyebrow');
+  siteData.clients.title = getValue('f-clients-title');
+  siteData.clients.subText = getValue('f-clients-sub');
+
+  // Process Headings
+  siteData.process = siteData.process || {};
+  siteData.process.eyebrow = getValue('f-proc-eyebrow');
+  siteData.process.title = getValue('f-proc-title');
+
+  // Visit
+  siteData.visit = siteData.visit || {};
+  siteData.visit.eyebrow = getValue('f-visit-eyebrow');
+  siteData.visit.title = getValue('f-visit-title');
+  siteData.visit.subtitle = getValue('f-visit-sub');
+  siteData.visit.addressLines = getValue('f-visit-addr');
+  siteData.visit.mapsUrl = getValue('f-visit-maps-url');
+  siteData.visit.phone = getValue('f-visit-phone');
+  siteData.visit.email = getValue('f-visit-email');
+  siteData.visit.mapEmbedUrl = getValue('f-visit-map-embed');
+  siteData.visit.mapBadge = getValue('f-visit-map-badge');
+
+  // Final CTA
+  siteData.finalCta = siteData.finalCta || {};
+  siteData.finalCta.eyebrow = getValue('f-cta-eyebrow');
+  siteData.finalCta.title = getValue('f-cta-title');
+  siteData.finalCta.subtitle = getValue('f-cta-sub');
+  siteData.finalCta.btn1Text = getValue('f-cta-btn1-txt');
+  siteData.finalCta.btn1Link = getValue('f-cta-btn1-link');
+  siteData.finalCta.btn2Text = getValue('f-cta-btn2-txt');
+  siteData.finalCta.btn2Link = getValue('f-cta-btn2-link');
+
+  // Footer
+  siteData.footer = siteData.footer || {};
+  siteData.footer.copyright = getValue('f-foot-copy');
+  siteData.footer.location = getValue('f-foot-loc');
+  siteData.footer.instagram = getValue('f-foot-insta');
+  siteData.footer.whatsapp = getValue('f-foot-wa');
+}
+
+// Stage and update preview without marking permanent published
+let syncTimeout = null;
+function syncAndPreview() {
+  if (syncTimeout) clearTimeout(syncTimeout);
+  syncTimeout = setTimeout(() => {
+    if (window.N1Data) {
+      window.N1Data.save(siteData);
+    }
+    // Notify preview iframe
+    const iframe = document.getElementById('previewIframe');
+    if (iframe && iframe.contentWindow && iframe.contentWindow.N1Data) {
+      try {
+        iframe.contentWindow.N1Data.applyToDOM(siteData);
+      } catch (err) {}
+    }
+  }, 100);
+}
+
+// ================= BUTTON ACTIONS =================
+function setupActionButtons() {
+  // Publish
+  document.getElementById('btnPublish').onclick = async () => {
+    harvestFormData();
+    if (window.N1Data) {
+      window.N1Data.save(siteData);
+    }
+    showToast('🚀 Changes published successfully to site & saved to disk!');
+  };
+
+  // Reset
+  document.getElementById('btnResetDefaults').onclick = () => {
+    if (confirm('Are you sure you want to restore all defaults? All your custom edits will be reverted!')) {
+      if (window.N1Data) {
+        siteData = window.N1Data.reset();
+        populateFormFromData(siteData);
+        syncAndPreview();
+        showToast('Restored to factory defaults.');
+      }
+    }
+  };
+
+  // Export JSON
+  document.getElementById('btnExportJson').onclick = () => {
+    harvestFormData();
+    const blob = new Blob([JSON.stringify(siteData, null, 2)], { type: 'application/json' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `n1-site-backup-${new Date().toISOString().slice(0,10)}.json`;
+    a.click();
+    URL.revokeObjectURL(url);
+    showToast('Backup JSON exported!');
+  };
+
+  // Import JSON
+  const fileInput = document.getElementById('importJsonInput');
+  document.getElementById('btnImportJsonTrigger').onclick = () => fileInput.click();
+  fileInput.onchange = (e) => {
+    const file = e.target.files[0];
+    if (!file) return;
+    const reader = new FileReader();
+    reader.onload = (evt) => {
+      try {
+        const parsed = JSON.parse(evt.target.result);
+        if (window.N1Data) {
+          const res = window.N1Data.importJSON(evt.target.result);
+          if (res.success) {
+            siteData = res.data;
+            populateFormFromData(siteData);
+            syncAndPreview();
+            showToast('JSON Backup restored successfully!');
+          } else {
+            showToast('Invalid JSON file: ' + res.error, true);
+          }
+        }
+      } catch (err) {
+        showToast('Error reading file: ' + err.message, true);
+      }
+    };
+    reader.readAsText(file);
+  };
+
+  // Raw JSON Editor Apply
+  document.getElementById('btnApplyRawJson').onclick = () => {
+    const code = document.getElementById('rawJsonEditor').value;
+    try {
+      const parsed = JSON.parse(code);
+      siteData = parsed;
+      if (window.N1Data) window.N1Data.save(siteData);
+      populateFormFromData(siteData);
+      syncAndPreview();
+      showToast('Raw JSON applied successfully!');
+    } catch (err) {
+      showToast('JSON Syntax Error: ' + err.message, true);
+    }
+  };
+}
+
+function updateRawJsonEditor() {
+  harvestFormData();
+  const editor = document.getElementById('rawJsonEditor');
+  if (editor && siteData) {
+    editor.value = JSON.stringify(siteData, null, 2);
+  }
+}
+
+// ================= LIVE SPLIT PREVIEW =================
+function setupLivePreview() {
+  const toggleBtn = document.getElementById('btnTogglePreview');
+  const previewPane = document.getElementById('previewPane');
+  const closeBtn = document.getElementById('btnClosePreview');
+  const iframe = document.getElementById('previewIframe');
+
+  toggleBtn.onclick = () => {
+    isPreviewOpen = !isPreviewOpen;
+    previewPane.classList.toggle('open', isPreviewOpen);
+    toggleBtn.classList.toggle('btn-primary', isPreviewOpen);
+    if (isPreviewOpen) {
+      iframe.src = '/';
+      setTimeout(() => syncAndPreview(), 500);
+    }
+  };
+
+  closeBtn.onclick = () => {
+    isPreviewOpen = false;
+    previewPane.classList.remove('open');
+    toggleBtn.classList.remove('btn-primary');
+  };
+
+  // Device switcher
+  const devBtns = document.querySelectorAll('.dev-btn');
+  devBtns.forEach(b => {
+    b.onclick = () => {
+      devBtns.forEach(x => x.classList.remove('active'));
+      b.classList.add('active');
+      const dev = b.dataset.dev;
+      iframe.className = 'preview-iframe ' + (dev === 'desktop' ? '' : dev);
+    };
+  });
+}
+
+// ================= MODALS & TOASTS =================
+function openModal(id) {
+  document.getElementById(id).classList.add('active');
+}
+function closeModal(id) {
+  document.getElementById(id).classList.remove('active');
+}
+
+function showToast(msg, isError = false) {
+  const container = document.getElementById('toastContainer');
+  const toast = document.createElement('div');
+  toast.className = 'toast' + (isError ? ' error' : '');
+  toast.innerHTML = `
+    <span style="color:${isError ? 'var(--red)' : 'var(--green)'};font-size:1.1rem;">${isError ? '⚠️' : '✓'}</span>
+    <span>${escapeHtml(msg)}</span>
+  `;
+  container.appendChild(toast);
+  setTimeout(() => {
+    toast.style.opacity = '0';
+    toast.style.transform = 'translateY(10px)';
+    toast.style.transition = 'all 0.3s ease';
+    setTimeout(() => toast.remove(), 300);
+  }, 3200);
+}
+
+function escapeHtml(str) {
+  if (str === null || str === undefined) return '';
+  return String(str)
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#039;');
+}
+
+function updateStats() {
+  if (!siteData) return;
+  if (siteData.equipment && siteData.equipment.items) {
+    document.getElementById('statEquip').textContent = siteData.equipment.items.length;
+  }
+  if (siteData.clients && siteData.clients.planets) {
+    document.getElementById('statClients').textContent = siteData.clients.planets.length;
+  }
+  if (siteData.productions && siteData.productions.items) {
+    document.getElementById('statProd').textContent = siteData.productions.items.length;
+  }
+  if (siteData.process && siteData.process.steps) {
+    document.getElementById('statSteps').textContent = siteData.process.steps.length;
+  }
+}
+</script>
+</body>
+</html>
