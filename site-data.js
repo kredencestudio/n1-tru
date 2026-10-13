@@ -210,15 +210,24 @@
 
     loadAsync: async function() {
       try {
+        let res = null;
+        try {
+          res = await fetch('/api/get-content');
+        } catch(e) {}
+        if (!res || !res.ok) {
+          try {
+            res = await fetch('/site-data.json?t=' + Date.now());
+          } catch(e) {}
+        }
+        if (res && res.ok) {
+          const json = await res.json();
+          cachedData = deepMerge(deepClone(DEFAULT_SITE_DATA), json);
+          try { localStorage.setItem(STORAGE_KEY, JSON.stringify(cachedData)); } catch(e){}
+          return cachedData;
+        }
         const stored = localStorage.getItem(STORAGE_KEY);
         if (stored) {
           cachedData = deepMerge(deepClone(DEFAULT_SITE_DATA), JSON.parse(stored));
-          return cachedData;
-        }
-        const res = await fetch('/site-data.json');
-        if (res.ok) {
-          const json = await res.json();
-          cachedData = deepMerge(deepClone(DEFAULT_SITE_DATA), json);
           return cachedData;
         }
       } catch (err) {

@@ -16,6 +16,10 @@ export default defineConfig({
                 const parsed = JSON.parse(body);
                 const filePath = path.resolve(import.meta.dirname, 'public/site-data.json');
                 fs.writeFileSync(filePath, JSON.stringify(parsed, null, 2), 'utf-8');
+                try {
+                  const rootPath = path.resolve(import.meta.dirname, 'site-data.json');
+                  fs.writeFileSync(rootPath, JSON.stringify(parsed, null, 2), 'utf-8');
+                } catch(e) {}
                 res.writeHead(200, { 'Content-Type': 'application/json' });
                 res.end(JSON.stringify({ success: true, message: 'Saved successfully to disk!' }));
               } catch (err) {

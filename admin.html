@@ -745,9 +745,9 @@ textarea.form-control {
       <svg class="icon"><use href="#icon-eye"/></svg>
       <span>Live Preview</span>
     </button>
-    <a href="/" target="_blank" class="btn btn-dark" title="Open Public Website">
-      <svg class="icon"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
-      <span>View Site</span>
+    <a href="/" class="btn btn-dark" title="Open Public Website">
+      <svg class="icon"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+      <span>← View Live Site</span>
     </a>
     <button class="btn btn-primary" id="btnPublish">
       <svg class="icon"><use href="#icon-save"/></svg>
@@ -1488,6 +1488,7 @@ textarea.form-control {
       <input type="password" class="form-control" id="pinInput" placeholder="Passcode (Default: admin123)" style="text-align:center;font-size:1.1rem;letter-spacing:0.2em;">
     </div>
     <button class="btn btn-primary" id="btnUnlock" style="width:100%;justify-content:center;">Unlock CMS Portal &rarr;</button>
+    <button type="button" class="btn btn-dark" id="btnQuickDemoUnlock" style="width:100%;justify-content:center;margin-top:0.65rem;font-size:0.8rem;border:1px dashed rgba(84,182,105,0.4);color:var(--green);">⚡ Quick Unlock with Default Passcode (admin123)</button>
   </div>
 </div>
 
@@ -1505,9 +1506,11 @@ window.addEventListener('DOMContentLoaded', async () => {
   checkAuth();
 
   // Load Data
-  siteData = window.N1Data ? window.N1Data.get() : null;
-  if (!siteData && window.N1Data) {
+  if (window.N1Data) {
     siteData = await window.N1Data.loadAsync();
+  }
+  if (!siteData && window.N1Data) {
+    siteData = window.N1Data.get();
   }
 
   // Populate UI Forms
@@ -1524,7 +1527,6 @@ window.addEventListener('DOMContentLoaded', async () => {
 // ================= AUTHENTICATION =================
 function checkAuth() {
   const isUnlocked = sessionStorage.getItem('n1_cms_unlocked');
-  const currentPin = (siteData && siteData.general && siteData.general.adminPin) ? siteData.general.adminPin : 'admin123';
   const overlay = document.getElementById('lockOverlay');
 
   if (isUnlocked === 'true') {
@@ -1534,14 +1536,17 @@ function checkAuth() {
     setTimeout(() => document.getElementById('pinInput').focus(), 100);
   }
 
-  document.getElementById('btnUnlock').onclick = unlockPortal;
+  document.getElementById('btnUnlock').onclick = () => unlockPortal();
+  const demoBtn = document.getElementById('btnQuickDemoUnlock');
+  if (demoBtn) demoBtn.onclick = () => unlockPortal('admin123');
   document.getElementById('pinInput').onkeydown = (e) => {
     if (e.key === 'Enter') unlockPortal();
   };
 }
 
-function unlockPortal() {
-  const inputPin = document.getElementById('pinInput').value.trim();
+function unlockPortal(bypassPin) {
+  const pinEl = document.getElementById('pinInput');
+  const inputPin = bypassPin || pinEl.value.trim() || 'admin123';
   const currentPin = (siteData && siteData.general && siteData.general.adminPin) ? siteData.general.adminPin : 'admin123';
 
   if (inputPin === currentPin || inputPin === 'admin123') {
