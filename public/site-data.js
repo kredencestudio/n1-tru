@@ -495,10 +495,17 @@
 
       // Footer
       if (data.footer) {
-        const footBottomDivs = document.querySelectorAll('.foot-bottom div');
-        if (footBottomDivs.length >= 2) {
-          if (data.footer.copyright) footBottomDivs[0].textContent = data.footer.copyright;
-          if (data.footer.location) footBottomDivs[1].textContent = data.footer.location;
+        const footCopy = document.getElementById('foot-copy') || document.querySelector('.foot-copyright');
+        if (footCopy && data.footer.copyright) {
+          footCopy.textContent = data.footer.copyright;
+        } else {
+          const firstDiv = document.querySelector('.foot-bottom > div:first-child');
+          if (firstDiv && data.footer.copyright) firstDiv.textContent = data.footer.copyright;
+        }
+
+        const footLoc = document.getElementById('foot-loc') || document.querySelector('.foot-location');
+        if (footLoc && data.footer.location) {
+          footLoc.textContent = data.footer.location;
         }
 
         const instaLink = document.querySelector('.foot-social a[aria-label="Instagram"]');

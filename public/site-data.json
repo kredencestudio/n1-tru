@@ -61,7 +61,8 @@
         "name": "SONY VENICE 2",
         "icon": "i-camera",
         "spec": "8.6K Full Frame · 16 Stops DR",
-        "accent": "#54B669"
+        "accent": "#54B669",
+        "image": ""
       },
       {
         "id": "2",
